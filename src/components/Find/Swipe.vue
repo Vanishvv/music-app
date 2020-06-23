@@ -42,18 +42,18 @@ export default {
 <style scoped lang="scss">
 .swipe {
   width: 100%;
-  height: 150px;
+  height: 4rem;
   &__img {
     width: 100%;
-    height: 150px;
+    height: 4rem;
   }
   &__title {
     position: absolute;
     right: 0;
-    bottom: 4px;
+    bottom: 0.15rem;
     color: #fff;
-    font-size: smaller;
-    padding: 3px 6px;
+    font-size: 0.35rem;
+    padding: 0.1rem 0.5rem;
     opacity: 0.8;
   }
 }

@@ -78,6 +78,20 @@ module.exports = {
         globalVars: {
           primary: '#333'
         }
+      },
+      postcss: {
+        plugins: [
+          require("autoprefixer")({
+            // 配置使用 autoprefixer
+            overrideBrowserslist: ["last 15 versions"]
+          }),
+          require("postcss-pxtorem")({
+            rootValue: 75,
+            selectorBlackList: ["ig"],
+            propList: ["*"],
+            exclude: /node_modules/
+          })
+        ]
       }
     }
   },

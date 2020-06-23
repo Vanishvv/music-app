@@ -32,18 +32,18 @@ export default {
   width: 100%;
   color: white;
   &__title {
-    font-size: 35px;
+    font-size: 1rem;
     font-family: "Microsoft YaHei";
     padding-top: 35%;
     font-style:italic;
-    animation:enter 2s ;
-    -webkit-animation:enter 2s;
+    animation:enter 10s ;
+    -webkit-animation:enter 10s;
   }
   &__logo{
-    font-size: 100px;
+    font-size: 3rem;
     position: absolute;
-    bottom: 5px;
-    right: 35%;
+    bottom: 0.1rem;
+    right: 33%;
   }
 }
 @keyframes enter

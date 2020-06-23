@@ -75,7 +75,7 @@ $theme-color: #2c3e50;
   width: 100%;
   a {
     color: $theme-color;
-    font-size: 15px;
+    font-size: 0.35rem;
   }
   &__home {
     &__popup{
@@ -84,11 +84,11 @@ $theme-color: #2c3e50;
     }
     &__search {
       color: $theme-color;
-      font-size: 18px;
+      font-size: 0.5rem;
     }
     &__menu {
       color: $theme-color;
-      font-size: 18px;
+      font-size: 0.5rem;
     }
     &__nav {
       display: flex;
@@ -96,14 +96,14 @@ $theme-color: #2c3e50;
       align-items: flex-end;
     }
     /deep/ .van-nav-bar__title {
-      width: 200px;
+      width: 12rem;
     }
   }
   .router-link {
     &-active {
       text-decoration: none;
       color: #c62f2f;
-      font-size: 18px;
+      font-size: 0.4rem;
     }
   }
 }

@@ -37,24 +37,24 @@ export default {
 
 <style scoped lang="scss">
 .circle-menu {
-  margin-top: 20px;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: space-around;
   &__item {
     &__icon {
       color: white;
       background-color: #c62f2f;
-      height: 40px;
-      width: 40px;
-      border-radius: 20px;
-      line-height: 40px;
+      height: 1.2rem;
+      width: 1.2rem;
+      border-radius: 1.25rem;
+      line-height: 1.2rem;
       .iconfont {
-        font-size: 23px;
+        font-size: 0.7rem;
       }
     }
     &__title {
       color: #2c3e50;
-      font-size: 12px;
+      font-size: 0.35rem;
     }
   }
 }

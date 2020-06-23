@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "@vant/touch-emulator";
+import 'amfe-flexible'
 import { Col, Row, Button, NavBar, Icon, Swipe, SwipeItem ,Popup,Image as VanImage} from "vant";
 
 Vue.config.productionTip = false;

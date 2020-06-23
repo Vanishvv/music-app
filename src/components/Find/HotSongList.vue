@@ -2,7 +2,7 @@
   <div class="hot-song-list">
     <div class="hot-song-list__head">
       <span><strong>{{this.title}}</strong></span>
-      <van-button round size="mini">{{this.buttonContent}}</van-button>
+      <van-button round size="small">{{this.buttonContent}}</van-button>
     </div>
     <div class="hot-song-list__body">
       <img-card v-for="(item, index) in imgCardData" :key="index" :cardItemData="item"></img-card>
@@ -53,17 +53,17 @@
   &__head{
     display: flex;
     justify-content: space-between;
-    padding-left: 8%;
-    padding-right: 6%;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
     padding-top: 5%;
-    font-size: 14px;
+    font-size: 0.5rem;
   }
   &__body{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding-left: 7%;
-    padding-right: 5%;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
   }
 }
 </style>

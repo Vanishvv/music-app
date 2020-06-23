@@ -6,9 +6,9 @@
       <van-image
               :src="cardItemInfo.picUrl"
               fit="cover"
-              height="100px"
-              width="100px"
-              radius="10px"
+              height="4em"
+              width="4em"
+              radius="0.5em"
               class="img-card__img"
       ></van-image>
     <span class="img-card__title">{{cardItemInfo.name}}</span>
@@ -42,22 +42,22 @@
   .img-card{
     display: flex;
     flex-direction: column;
-    width: 100px;
+    width: 4em;
     &__title{
-      font-size: 12px;
+      font-size: 0.32rem;
       text-align: left;
       overflow: hidden;
     }
     &__play-count{
       color: white;
-      font-size: 5px;
+      font-size: 0.2rem;
       position: relative;
-      top: 15px;
-      right: 5px;
+      top: 0.4rem;
+      right: 0.2rem;
       z-index: 999;
       text-align: right;
       &__icon{
-        font-size: 12px;
+        font-size: 0.2rem;
       }
     }
   }
