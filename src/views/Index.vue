@@ -8,15 +8,15 @@
     <!--载入动画-->
     <Start :startInfo="homeData.title" v-if="load"></Start>
     <div class="index__home">
-      <van-nav-bar left-arrow>
+      <van-nav-bar left-arrow @click-left="openSide" @click-right="openSearch">
         <template #left>
           <i class="index__home__menu iconfont icon-index-menu"></i>
         </template>
         <template #title>
           <div class="index__home__nav">
             <router-link
-                    v-for="item in homeData.routeData"
-                    :key="item"
+                    v-for="(item,index) in homeData.routeData"
+                    :key="index"
                     :to="item.path">
               {{item.name}}
             </router-link>
@@ -27,6 +27,9 @@
         </template>
       </van-nav-bar>
       <router-view></router-view>
+      <van-popup v-model="show" position="left" class="index__home__popup">
+        <!--待加入弹出框的内容-->
+      </van-popup>
     </div>
   </div>
 </template>
@@ -39,7 +42,8 @@ export default {
   data() {
     return {
       homeData: indexData.data,
-      load: true
+      load: true,
+      show:false
     };
   },
   components: {
@@ -50,6 +54,12 @@ export default {
       setTimeout(() => {
         this.load = false;
       }, 3000);
+    },
+    openSide(){
+      this.show=true
+    },
+    openSearch(){
+      this.$router.push("/search");
     }
   },
   mounted() {
@@ -68,6 +78,10 @@ $theme-color: #2c3e50;
     font-size: 15px;
   }
   &__home {
+    &__popup{
+      height: 100%;
+      width: 80%;
+    }
     &__search {
       color: $theme-color;
       font-size: 18px;

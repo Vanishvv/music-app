@@ -4,7 +4,7 @@ module.exports = {
     'routeData':[
       {
         'name':'我的',
-        'path':'/personalPage'
+        'path':'/personalPage',
       },
       {
         'name':'发现',
