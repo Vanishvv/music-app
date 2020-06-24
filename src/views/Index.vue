@@ -53,7 +53,7 @@ export default {
     out: function() {
       setTimeout(() => {
         this.load = false;
-      }, 4000);
+      }, 3000);
     },
     openSide(){
       this.show=true

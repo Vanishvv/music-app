@@ -36,8 +36,8 @@ export default {
     font-family: "Microsoft YaHei";
     padding-top: 35%;
     font-style:italic;
-    animation:enter 4s ;
-    -webkit-animation:enter 4s;
+    animation:enter 3s ;
+    -webkit-animation:enter 3s;
   }
   &__logo{
     font-size: 3rem;
