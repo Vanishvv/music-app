@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import choiceInfo from "../../static/songListChoiceInfo";
+import choiceInfo from "../../../static/songListChoiceInfo";
 export default {
   name: "",
   data() {

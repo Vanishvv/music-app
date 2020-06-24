@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import swipe from "../components/Find/Swipe";
-import circleMenu from "../components/Find/CircleMenu";
-import hotSongList from "../components/Find/HotSongList";
+import swipe from "../components/FindPageBase/Swipe";
+import circleMenu from "../components/FindPageBase/CircleMenu";
+import hotSongList from "../components/FindPageBase/HotSongList";
 import findData from "../../static/findData";
 export default {
   name: "",
@@ -28,9 +28,10 @@ export default {
   components: {
     swipe,
     circleMenu,
-   hotSongList
+   hotSongList,
   }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

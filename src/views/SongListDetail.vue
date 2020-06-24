@@ -51,9 +51,9 @@
 import axios from "axios";
 import ImgCard from "../components/ImgCard";
 import BaseNav from "../components/BaseNav";
-import SongListInfo from "../components/SongListInfo";
-import SongListChoice from "../components/SongListChoice";
-import SongListContent from "../components/SongListContent";
+import SongListInfo from "../components/SongListBase/SongListInfo";
+import SongListChoice from "../components/SongListBase/SongListChoice";
+import SongListContent from "../components/SongListBase/SongListContent";
 export default {
   name: "",
   data() {

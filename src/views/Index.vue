@@ -31,12 +31,14 @@
         <!--待加入弹出框的内容-->
       </van-popup>
     </div>
+    <mini-music-player></mini-music-player>
   </div>
 </template>
 
 <script>
 import indexData from "../../static/indexData";
 import Start from "../components/Start";
+import MiniMusicPlayer from "../components/MiniMusicPlayer";
 export default {
   name: "home",
   data() {
@@ -47,7 +49,8 @@ export default {
     };
   },
   components: {
-    Start
+    Start,
+    MiniMusicPlayer
   },
   methods: {
     out: function() {
