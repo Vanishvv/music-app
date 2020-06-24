@@ -47,7 +47,7 @@ export default {
       height: 1.2rem;
       width: 1.2rem;
       border-radius: 1.25rem;
-      line-height: 1rem;
+      line-height: 1.2rem;
       .iconfont {
         font-size: 0.7rem;
       }
