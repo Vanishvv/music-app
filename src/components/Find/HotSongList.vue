@@ -15,7 +15,9 @@
       <img-card
         v-for="(item, index) in imgCardData"
         :key="index"
-        :cardItemData="item"
+        :card-url="item.picUrl"
+        :card-play-count="item.playCount"
+        @click.native="goListDetial(item.id)"
       >
         <template v-slot:imgTitle>
           <span class="hot-song-list__body__title">{{ item.name }}</span>
@@ -48,16 +50,16 @@ export default {
       let res = await axios.get("http://localhost:3000/personalized?limit=9");
       if (res.status == 200 && res) {
         this.imgCardData = res.data.result;
-        for (let i = 0; i < 9; i++) {
-          // eslint-disable-next-line no-unused-vars
-          let num = this.imgCardData[i].playCount;
-          if (parseInt(num / 10000) != 0) {
-            num = num / 10000;
-            this.imgCardData[i].playCount = parseInt(num).toString() + "万";
-          }
-        }
       }
-    }
+    },
+    goListDetial(id) {
+      this.$router.push({
+        name: "songListDetail",
+        query: {
+          id: id
+        }
+      });
+    },
   }
 };
 </script>
