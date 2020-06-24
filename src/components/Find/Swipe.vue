@@ -43,18 +43,21 @@ export default {
 .swipe {
   width: 100%;
   height: 4rem;
+  border-radius: 0.2rem 0.2rem;
   &__img {
-    width: 100%;
-    height: 4rem;
+    width: 90%;
+    height: 3.8rem;
+    border-radius: 0.2rem 0.2rem;
   }
   &__title {
     position: absolute;
-    right: 0;
+    right: 5%;
     bottom: 0.15rem;
     color: #fff;
     font-size: 0.35rem;
-    padding: 0.1rem 0.5rem;
+    padding: 0.1rem 0.3rem;
     opacity: 0.8;
+    border-radius: 0.1rem 0 0.1rem 0;
   }
 }
 </style>
