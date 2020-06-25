@@ -11,6 +11,7 @@ import DailyList from "../views/DailyList";
 import DJ from "../views/DJ";
 import Search from "../views/Search";
 import SongListDetail from "../views/SongListDetail";
+import MusicPlayer from "../views/MusicPlayer";
 
 Vue.use(VueRouter);
 
@@ -72,7 +73,12 @@ const routes = [
     path: "/songListDetail",
     name: "songListDetail",
     component: SongListDetail,
-  }
+  },
+  {
+    path: "/musicPlayer",
+    name: "musicPlayer",
+    component: MusicPlayer,
+  },
 ];
 
 const router = new VueRouter({

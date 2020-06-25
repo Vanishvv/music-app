@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
 export default {
   name: "",
   props:["songTracks"],
@@ -38,9 +39,26 @@ export default {
     }
   },
   methods:{
-    playSong(id) {
-      console.log(id);
-    }
+    async playSong(id) {
+      this.$store.commit('changeCurrentSongId', id+'');
+      let cSongId=this.$store.state.currentSongId;
+      let songData=[];
+      let res1 = await axios.get(
+        "http://localhost:3000/song/url?id=" + cSongId
+      );
+      if (res1.status == 200 && res1) {
+        songData[0]=res1.data.data[0].url;
+      }
+      let res = await axios.get(
+        "http://localhost:3000/song/detail?ids=" + cSongId
+      );
+      if (res.status == 200 && res) {
+        songData[1]=res.data.songs[0].name;
+        songData[2]=res.data.songs[0].al.picUrl;
+        songData[3]=res.data.songs[0].ar[0].name;
+      }
+      this.$store.commit('changeCurrentSongData', songData);
+    },
   }
 };
 </script>
@@ -49,6 +67,7 @@ export default {
 .list-content {
   font-size: 0.2rem;
   margin-top: 0.3rem;
+  margin-bottom: 1.5rem;
   &__item {
     height: 1.5rem;
     display: flex;

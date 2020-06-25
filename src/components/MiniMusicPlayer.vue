@@ -1,11 +1,11 @@
 <template>
-  <div class="mini-music-player">
-    <div class="mini-music-player__img">
-      <img :src="picUrl" />
+  <div class="mini-music-player van-hairline--top">
+    <div class="mini-music-player__img" @click="goLarge(songId)">
+      <img :src="songData[2]" />
     </div>
-    <div class="mini-music-player__name-and-author">
-      <span class="mini-music-player__name">{{ songName }}</span>
-      <span class="mini-music-player__author">{{ authorName }}</span>
+    <div class="mini-music-player__name-and-author" @click="goLarge(songId)">
+      <span class="mini-music-player__name">{{ songData[1] }}</span>
+      <span class="mini-music-player__author">{{ songData[3] }}</span>
     </div>
     <div class="mini-music-player__audio">
       <i :class="iconChange" @click="changeState"></i>
@@ -14,46 +14,73 @@
 </template>
 
 <script>
-import axios from "axios";
 var music = new Audio();
+import { mapGetters } from "vuex";
 export default {
   name: "",
   data() {
     return {
-      songName: "",
-      picUrl: "",
-      authorName: "",
-      songUrl: "",
-      iconChange: "iconfont icon-play-list"
+      songData: this.$store.state.currentSongData,
+      iconChange: "",
+      songId: this.$store.state.currentSongId,
+      playState: ""
     };
   },
+  computed: {
+    getCurrentSongId() {
+      return this.$store.state.currentSongId;
+    },
+    getCurrentSongData() {
+      return this.$store.state.currentSongData;
+    },
+    getPlaySate() {
+      return this.$store.state.playState;
+    },
+    ...mapGetters([
+      "getterCurrentSongId",
+      "getterCurrentSongData",
+      "getterPlayState"
+    ])
+  },
+  watch: {
+    getterCurrentSongId(msg) {
+      this.songId = msg;
+    },
+    getterCurrentSongData(msg) {
+      this.songData = msg;
+      music.src = this.songData[0];
+    },
+    getterPlayState(msg) {
+      this.playState = msg;
+    }
+  },
   mounted() {
-    this.getSongDetial();
+    console.log(this.$store.state.playState);
+    if (this.$store.state.playState == "playing") {
+      this.iconChange = "iconfont icon-play-list";
+    } else {
+      this.iconChange = "iconfont icon-stop";
+    }
   },
   methods: {
-    async getSongDetial() {
-      let res1 = await axios.get("http://localhost:3000/song/url?id=405998841");
-      if (res1.status == 200 && res1) {
-        this.songUrl = res1.data.data[0].url;
-        music.src = this.songUrl;
-      }
-      let res = await axios.get(
-        "http://localhost:3000/song/detail?ids=405998841"
-      );
-      if (res.status == 200 && res) {
-        this.songName = res.data.songs[0].name;
-        this.picUrl = res.data.songs[0].al.picUrl;
-        this.authorName = res.data.songs[0].ar[0].name;
-      }
-    },
     changeState() {
-      if (this.iconChange == "iconfont icon-play-list") {
+      if (this.$store.state.playState == "playing") {
         this.iconChange = "iconfont icon-stop";
+        this.$store.commit("changePlayState", "paused");
         music.play();
       } else {
         this.iconChange = "iconfont icon-play-list";
+        this.$store.commit("changePlayState", "playing");
         music.pause();
       }
+    },
+    goLarge(id){
+      this.$router.push({
+        name: "musicPlayer",
+        query: {
+          id: id
+        }
+      });
     }
   }
 };
@@ -70,7 +97,6 @@ export default {
   display: flex;
   justify-items: center;
   padding-top: 0.15rem;
-  border-top: 1px solid darkgray;
   padding-left: 0.5rem;
   &__audio {
     margin-left: 3.2rem;

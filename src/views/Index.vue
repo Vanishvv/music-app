@@ -28,10 +28,10 @@
       </van-nav-bar>
       <router-view></router-view>
       <van-popup v-model="show" position="left" class="index__home__popup">
-        <!--待加入弹出框的内容-->
+        <side-popup></side-popup>
       </van-popup>
     </div>
-    <mini-music-player></mini-music-player>
+    <mini-music-player v-if="showMini" ref="mini"></mini-music-player>
   </div>
 </template>
 
@@ -39,23 +39,28 @@
 import indexData from "../../static/indexData";
 import Start from "../components/Start";
 import MiniMusicPlayer from "../components/MiniMusicPlayer";
+import SidePopup from "../components/SidePopup";
 export default {
   name: "home",
   data() {
     return {
       homeData: indexData.data,
       load: true,
-      show:false
+      show:false,
+      showMini:false,
     };
   },
   components: {
     Start,
-    MiniMusicPlayer
+    MiniMusicPlayer,
+    SidePopup
   },
   methods: {
     out: function() {
       setTimeout(() => {
         this.load = false;
+        this.showMini=true;
+        this.$store.commit('changeStartLoad',false);
       }, 3000);
     },
     openSide(){
@@ -66,7 +71,12 @@ export default {
     }
   },
   mounted() {
-    this.out();
+    if(this.$store.state.startLoad){
+      this.out();
+    }else{
+      this.load = false;
+      this.showMini=true;
+    }
   }
 };
 </script>

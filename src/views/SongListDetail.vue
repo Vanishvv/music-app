@@ -5,6 +5,7 @@
 */
 <template>
   <div class="list-detail">
+    <mini-music-player></mini-music-player>
     <div class="list-detail__head">
       <!--通用页面导航头-->
       <base-nav :title="navTitle"></base-nav>
@@ -17,6 +18,7 @@
         ></img-card>
         <!--歌单详情介绍-->
         <song-list-info
+           v-if="songListDetail.creator"
           :list-name="songListDetail.name"
           :list-author="songListDetail.creator.nickname"
           :list-icon="songListDetail.creator.avatarUrl"
@@ -54,6 +56,7 @@ import BaseNav from "../components/BaseNav";
 import SongListInfo from "../components/SongListBase/SongListInfo";
 import SongListChoice from "../components/SongListBase/SongListChoice";
 import SongListContent from "../components/SongListBase/SongListContent";
+import MiniMusicPlayer from "../components/MiniMusicPlayer";
 export default {
   name: "",
   data() {
@@ -62,7 +65,7 @@ export default {
       songListDetail: [],
       navTitle: "歌单",
       playName:'播放全部',
-      add:'收藏歌单'
+      add:'收藏歌单',
     };
   },
   mounted() {
@@ -87,7 +90,8 @@ export default {
     BaseNav,
     SongListInfo,
     SongListChoice,
-    SongListContent
+    SongListContent,
+    MiniMusicPlayer
   }
 };
 </script>
