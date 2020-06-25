@@ -12,6 +12,8 @@ import DJ from "../views/DJ";
 import Search from "../views/Search";
 import SongListDetail from "../views/SongListDetail";
 import MusicPlayer from "../views/MusicPlayer";
+import Login from "../views/Login";
+import Register from "../views/Register";
 
 Vue.use(VueRouter);
 
@@ -79,6 +81,16 @@ const routes = [
     name: "musicPlayer",
     component: MusicPlayer,
   },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
+  }
 ];
 
 const router = new VueRouter({

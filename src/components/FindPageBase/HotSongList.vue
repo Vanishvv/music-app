@@ -80,6 +80,7 @@ export default {
     flex-wrap: wrap;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
+    margin-bottom: 1.5rem;
     &__title {
       font-size: 0.32rem;
       text-align: left;

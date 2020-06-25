@@ -3,10 +3,27 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "@vant/touch-emulator";
-import 'amfe-flexible'
-import { Col, Row, Button, NavBar, Icon, Swipe, SwipeItem ,Popup,Image as VanImage,ShareSheet} from "vant";
+import "amfe-flexible";
+import qs from 'qs'
+import {
+  Field,
+  Form,
+  Col,
+  Row,
+  Button,
+  NavBar,
+  Icon,
+  Swipe,
+  SwipeItem,
+  Popup,
+  Notify,
+  Dialog,
+  Image as VanImage,
+  ShareSheet,
+} from "vant";
 
 Vue.config.productionTip = false;
+Vue.prototype.qs = qs;
 Vue.use(Col);
 Vue.use(Row);
 Vue.use(Button);
@@ -17,6 +34,10 @@ Vue.use(SwipeItem);
 Vue.use(Popup);
 Vue.use(VanImage);
 Vue.use(ShareSheet);
+Vue.use(Form);
+Vue.use(Field);
+Vue.use(Notify);
+Vue.use(Dialog);
 
 new Vue({
   router,
