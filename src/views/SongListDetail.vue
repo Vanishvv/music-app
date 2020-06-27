@@ -38,6 +38,7 @@
           size="mini"
           type="danger"
           class="list-detail__list__head__add"
+          @click="addToCollection"
           >{{add}}</van-button
         >
       </div>
@@ -82,6 +83,40 @@ export default {
       );
       if (res.status == 200 && res) {
         this.songListDetail = res.data.playlist;
+      }
+    },
+    /*收藏歌单*/
+    addToCollection(){
+      if(this.$store.state.currentUserName!=""){
+        axios
+          .post("http://localhost:3001/api/addListCollection", {
+            username: this.$store.state.currentUserName,
+            listid:this.$route.query.id
+          })
+          .then(response => {
+            console.log(response.data);
+            // eslint-disable-next-line no-undef
+            app.message = response.data.message;
+            if (response.data.message == "收藏歌单成功") {
+              this.$notify({
+                message: "收藏歌单成功",
+                type: "success",
+                duration: 1000
+              });
+            }else{
+              this.$notify({
+                message: "收藏歌单失败",
+                type: "danger",
+                duration: 1000
+              });
+            }
+          });
+      }else{
+        this.$notify({
+          message: "请先登录",
+          type: "danger",
+          duration: 1000
+        });
       }
     }
   },

@@ -1,13 +1,13 @@
 <template>
   <div class="side-popup">
     <div class="side-popup__head">
-      <span v-if="showUserName">{{ userName }}</span>
+      <span v-if="userName">{{ userName }}</span>
       <van-button
         round
         type="info"
         color="#c62f2f"
         size="small"
-        v-if="showLogin"
+        v-if="!userName"
         @click="goLogin"
         >登录</van-button
       >
@@ -37,6 +37,7 @@
         class="side-popup__footer__item"
         v-for="(item, index) in sidePopupInfo.footerData"
         :key="index"
+        @click="goSetting(item.name)"
       >
         <i :class="item.iconName"></i>
         <span>{{ item.name }}</span>
@@ -51,15 +52,18 @@ export default {
   name: "",
   data() {
     return {
-      userName: "WangJun",
-      showUserName: false,
-      showLogin: true,
+      userName: this.$store.state.currentUserName,
       sidePopupInfo: sidePopupData.data
     };
   },
   methods: {
     goLogin() {
       this.$router.push("/login");
+    },
+    goSetting(name){
+      if(name=="设置"){
+        this.$router.push("/settings");
+      }
     }
   },
   components: {}

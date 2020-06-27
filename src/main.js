@@ -20,6 +20,9 @@ import {
   Dialog,
   Image as VanImage,
   ShareSheet,
+  Cell,
+  CellGroup,
+  Switch
 } from "vant";
 
 Vue.config.productionTip = false;
@@ -38,6 +41,9 @@ Vue.use(Form);
 Vue.use(Field);
 Vue.use(Notify);
 Vue.use(Dialog);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(Switch);
 
 new Vue({
   router,

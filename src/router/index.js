@@ -14,6 +14,8 @@ import SongListDetail from "../views/SongListDetail";
 import MusicPlayer from "../views/MusicPlayer";
 import Login from "../views/Login";
 import Register from "../views/Register";
+import Settings from "../views/Settings";
+import EditPassword from "../views/EditPassword";
 
 Vue.use(VueRouter);
 
@@ -90,6 +92,16 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register,
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings,
+  },
+  {
+    path: "/editPassword",
+    name: "editPassword",
+    component: EditPassword,
   }
 ];
 

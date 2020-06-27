@@ -1,37 +1,36 @@
 /**
 * @Author:Wang Jun
 * @Date:2020/6/25/025 22:23
-* @Description:注册页面
+* @Description:修改密码页面
 */
 <template>
-  <div class="register">
+  <div class="edit-password">
     <base-nav :title="loginTitle"></base-nav>
-    <div class="register__title">{{ title }}</div>
-    <form class="register__form">
+    <div class="edit-password__title">{{ title }}</div>
+    <form class="edit-password__form">
       <p class="form">
         <input
-          class="register__form__username"
-          type="text"
-          id="user"
-          placeholder="Username"
-          name="username"
-          v-model="username"
-          @blur="checkName"
-        />
-      </p>
-      <p class="form">
-        <input
-          class="register__form__userpwd"
+          class="edit-password__form__old-password"
           type="password"
-          id="passwd"
-          placeholder="Password"
+          id="old-password"
+          placeholder="Old Password"
           name="userpwd"
-          v-model="userpwd"
+          v-model="oldPassword"
+          @blur="checkOldPassword"
         />
       </p>
       <p class="form">
         <input
-          class="register__form__confirm-userpwd"
+          class="edit-password__form__new-password"
+          type="password"
+          id="new-password"
+          placeholder="New Password"
+          v-model="newPassword"
+        />
+      </p>
+      <p class="form">
+        <input
+          class="edit-password__form__confirm-userpwd"
           type="password"
           id="passwd-confirm"
           placeholder="Confirm password"
@@ -42,36 +41,29 @@
     </form>
     <input
       type="submit"
-      value="Log in"
-      class="register__form__login"
+      value="Submit"
+      class="edit-password__form__edit"
       style="margin-right: 10px;"
-      @click="jumpToLogin"
-    />
-    <input
-      type="submit"
-      value="Register"
-      class="register__form__register"
-      style="margin-right: 10px;"
-      @click="register"
+      @click="submit"
     />
   </div>
 </template>
 
 <script>
 // eslint-disable-next-line no-unused-vars
-var isUserExist = true;
+var isOldpwdCorrect = false;
 // eslint-disable-next-line no-unused-vars
-var isPwdCorrect = true;
+var isPwdCorrect = false;
 import BaseNav from "../components/BaseNav";
 import axios from "axios";
 export default {
   name: "",
   data() {
     return {
-      title: "Register",
+      title: "Edit Password",
       loginTitle: "",
-      username: "",
-      userpwd: "",
+      oldPassword: "",
+      newPassword: "",
       userpwdConfirm: ""
     };
   },
@@ -79,11 +71,8 @@ export default {
     BaseNav
   },
   methods: {
-    jumpToLogin() {
-      this.$router.push({ path: "/login" });
-    },
     checkPasspwdConfirm() {
-      if (this.userpwd != this.userpwdConfirm) {
+      if (this.newPassword != this.userpwdConfirm) {
         this.$notify({
           message: "密码不一致",
           type: "danger",
@@ -94,49 +83,56 @@ export default {
         isPwdCorrect = true;
       }
     },
-    checkName() {
+    checkOldPassword() {
+      var username = this.$store.state.currentUserName;
+      var oldpwd = this.oldPassword;
       axios.get("http://localhost:3001/api/login").then(response => {
         // eslint-disable-next-line no-undef
         app.arr = response.data.data;
         // eslint-disable-next-line no-undef
-        for (let i = 0; i < app.arr.length; i++) {
+        for (var i = 0; i < app.arr.length; i++) {
           // eslint-disable-next-line no-undef
-          if (app.arr[i].username.trim() == this.username.trim()) {
-            this.$notify({
-              message: "用户名已存在",
-              type: "danger",
-              duration: 1000
-            });
-            isUserExist = false;
-            break;
-          } else {
-            isUserExist = true;
+          if (app.arr[i].username.trim() === username.trim()) {
+            // eslint-disable-next-line no-undef
+            if (app.arr[i].userpwd.trim() === oldpwd.trim()) {
+              isOldpwdCorrect = true;
+              this.$notify({
+                message: "旧密码正确",
+                type: "success",
+                duration: 1000
+              });
+            } else {
+              this.$notify({
+                message: "旧密码错误",
+                type: "danger",
+                duration: 1000
+              });
+            }
           }
         }
       });
     },
-    register() {
-      if (isUserExist && isPwdCorrect) {
+    submit() {
+      if (isOldpwdCorrect && isPwdCorrect) {
         axios
-          .post("http://localhost:3001/api/register", {
-            username: this.username,
-            userpwd: this.userpwd,
+          .post("http://localhost:3001/api/edit", {
+            username: this.$store.state.currentUserName,
+            newpwd: this.newPassword,
             userpwdConfirm: this.userpwdConfirm
           })
           .then(response => {
             // eslint-disable-next-line no-undef
             app.message = response.data.message;
-            if (response.data.message == "注册成功") {
+            if (response.data.message == "修改密码成功") {
               this.$dialog.alert({
-                message: "注册成功，跳转到首页"
+                message: "修改密码成功，跳转到首页"
               });
-              this.$store.commit("changeCurrentUserName", this.username);
               this.$router.push("/");
             }
           });
       } else {
         this.$dialog.alert({
-          message: "用户名已存在或密码不一致"
+          message: "旧密码错误"
         });
       }
     }
@@ -145,7 +141,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.register {
+.edit-password {
   height: 100%;
   background-color: #c62f2f;
   color: white;
@@ -157,8 +153,8 @@ export default {
     margin-top: 2.5rem;
   }
   &__form {
-    &__username,
-    &__userpwd,
+    &__old-password,
+    &__new-password,
     &__confirm-userpwd {
       border-radius: 1rem;
       border: none;
@@ -168,19 +164,15 @@ export default {
       font-size: 0.4rem;
       color: #333333;
     }
-    &__login,
-    &__register {
+    &__edit {
       background-color: white;
-      color: #c62f2f;
-      width: 40%;
+      background-color: #42b983;
+      color: white;
+      width: 80%;
       height: 1.2rem;
       border: none;
       border-radius: 1rem;
       font-size: 0.5rem;
-    }
-    &__register {
-      background-color: #42b983;
-      color: white;
     }
   }
 }
