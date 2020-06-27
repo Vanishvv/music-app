@@ -35,7 +35,6 @@ export default {
   props:["songTracks"],
   data(){
     return{
-      contentTracks:this.songTracks
     }
   },
   methods:{

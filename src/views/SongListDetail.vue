@@ -1,4 +1,7 @@
-/** * @Author:Wang Jun * @Date:2020/6/24/024 16:44 * @Description:歌单详情页面
+/**
+* @Author:Wang Jun
+* @Date:2020/6/24/024 16:44
+* @Description:歌单详情页面
 */
 <template>
   <div class="list-detail">
@@ -82,6 +85,7 @@ export default {
       if (res.status == 200 && res) {
         this.songListDetail = res.data.playlist;
       }
+      this.$store.commit("changeCurrentTrackIds", res.data.playlist.trackIds);
     },
     /*获取歌单收藏状态*/
     getListCollection() {
@@ -142,6 +146,11 @@ export default {
               console.log(response.data.message);
               if(response.data.message=="取消收藏成功"){
                 this.add="收藏歌单"
+                this.$notify({
+                  message: "取消收藏成功",
+                  type: "success",
+                  duration: 1000
+                });
               }else {
                 this.$notify({
                   message: "取消收藏失败",

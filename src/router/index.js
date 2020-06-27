@@ -16,6 +16,7 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import Settings from "../views/Settings";
 import EditPassword from "../views/EditPassword";
+import MySongList from "../views/MySongList";
 
 Vue.use(VueRouter);
 
@@ -102,6 +103,11 @@ const routes = [
     path: "/editPassword",
     name: "editPassword",
     component: EditPassword,
+  },
+  {
+    path: "/mySongList",
+    name: "mySongList",
+    component: MySongList,
   }
 ];
 

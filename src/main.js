@@ -22,8 +22,10 @@ import {
   ShareSheet,
   Cell,
   CellGroup,
-  Switch
+  Switch,
+  Progress
 } from "vant";
+
 
 Vue.config.productionTip = false;
 Vue.prototype.qs = qs;
@@ -44,6 +46,7 @@ Vue.use(Dialog);
 Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Switch);
+Vue.use(Progress);
 
 new Vue({
   router,

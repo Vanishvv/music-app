@@ -55,7 +55,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.playState);
     if (this.$store.state.playState == "playing") {
       this.iconChange = "iconfont icon-play-list";
     } else {
@@ -75,12 +74,17 @@ export default {
       }
     },
     goLarge(id){
-      this.$router.push({
-        name: "musicPlayer",
-        query: {
-          id: id
-        }
-      });
+      if(this.$store.state.currentSongId!=""){
+        this.$store.commit("changeCurrentMusicTime", music.currentTime);
+        music.pause();
+        this.$router.push('/musicPlayer');
+      }else {
+        this.$notify({
+          message: "当前没有播放歌曲",
+          type: "danger",
+          duration: 1000
+        });
+      }
     }
   }
 };

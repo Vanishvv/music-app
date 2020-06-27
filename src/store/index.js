@@ -5,11 +5,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentSongId: "33894312",
+    currentSongId: "",
     startLoad: "true",
     currentSongData: [],
-    playState: "paused",
-    currentUserName: ""
+    playState: "playing",
+    currentUserName: "",
+    currentMusicTime:'',
+    currentTrackIds:[]
   },
   mutations: {
     changeCurrentSongId(state, currentSongId) {
@@ -26,6 +28,12 @@ export default new Vuex.Store({
     },
     changeCurrentUserName(state, currentUserName) {
       state.currentUserName = currentUserName;
+    },
+    changeCurrentMusicTime(state, currentMusicTime) {
+      state.currentMusicTime = currentMusicTime;
+    },
+    changeCurrentTrackIds(state, currentTrackIds) {
+      state.currentTrackIds = currentTrackIds;
     }
   },
   getters: {
@@ -43,6 +51,12 @@ export default new Vuex.Store({
     },
     getterCurrentUserName(state) {
       return state.currentUserName;
+    },
+    getterCurrentMusicTime(state) {
+      return state.currentMusicTime;
+    },
+    getterCurrentTrackIds(state) {
+      return state.currentTrackIds;
     }
   },
   actions: {
@@ -60,6 +74,12 @@ export default new Vuex.Store({
     },
     getCurrentUserName({ commit }, data) {
       commit("changeCurrentUserName", data);
+    },
+    getCurrentMusicTime({ commit }, data) {
+      commit("changeCurrentMusicTime", data);
+    },
+    getCurrentTrackIds({ commit }, data) {
+      commit("changeCurrentTrackIds", data);
     }
   }
 });

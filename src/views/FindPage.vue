@@ -24,7 +24,6 @@ export default {
       load: true
     };
   },
-  methods: {},
   components: {
     swipe,
     circleMenu,
