@@ -1,7 +1,4 @@
-/**
-* @Author:Wang Jun
-* @Date:2020/6/24/024 16:44
-* @Description:歌单详情页面
+/** * @Author:Wang Jun * @Date:2020/6/24/024 16:44 * @Description:歌单详情页面
 */
 <template>
   <div class="list-detail">
@@ -18,7 +15,7 @@
         ></img-card>
         <!--歌单详情介绍-->
         <song-list-info
-           v-if="songListDetail.creator"
+          v-if="songListDetail.creator"
           :list-name="songListDetail.name"
           :list-author="songListDetail.creator.nickname"
           :list-icon="songListDetail.creator.avatarUrl"
@@ -32,14 +29,14 @@
     <div class="list-detail__list">
       <div class="list-detail__list__head">
         <i class="iconfont icon-play-list"></i>
-        <span>{{playName}}</span>
+        <span>{{ playName }}</span>
         <van-button
           round
           size="mini"
           type="danger"
           class="list-detail__list__head__add"
           @click="addToCollection"
-          >{{add}}</van-button
+          >{{ add }}</van-button
         >
       </div>
       <!--歌单播放列表-->
@@ -65,13 +62,14 @@ export default {
       listId: "",
       songListDetail: [],
       navTitle: "歌单",
-      playName:'播放全部',
-      add:'收藏歌单',
+      playName: "播放全部",
+      add: "收藏歌单"
     };
   },
   mounted() {
     this.getListDetail();
     this.getListId();
+    this.getListCollection();
   },
   methods: {
     getListId() {
@@ -85,33 +83,75 @@ export default {
         this.songListDetail = res.data.playlist;
       }
     },
-    /*收藏歌单*/
-    addToCollection(){
-      if(this.$store.state.currentUserName!=""){
-        axios
-          .post("http://localhost:3001/api/addListCollection", {
-            username: this.$store.state.currentUserName,
-            listid:this.$route.query.id
-          })
-          .then(response => {
-            console.log(response.data);
-            // eslint-disable-next-line no-undef
-            app.message = response.data.message;
-            if (response.data.message == "收藏歌单成功") {
-              this.$notify({
-                message: "收藏歌单成功",
-                type: "success",
-                duration: 1000
-              });
-            }else{
-              this.$notify({
-                message: "收藏歌单失败",
-                type: "danger",
-                duration: 1000
-              });
+    /*获取歌单收藏状态*/
+    getListCollection() {
+      axios
+        .get("http://localhost:3001/api/getListCollection")
+        .then(response => {
+          // eslint-disable-next-line no-undef
+          app.arr = response.data.data;
+          // eslint-disable-next-line no-undef
+          for (let i = 0; i < app.arr.length; i++) {
+            if (
+              // eslint-disable-next-line no-undef
+              app.arr[i].listid == this.$route.query.id &&
+              // eslint-disable-next-line no-undef
+              app.arr[i].username == this.$store.state.currentUserName
+            ) {
+              this.add = "取消收藏";
+              break;
             }
-          });
-      }else{
+          }
+        });
+    },
+    /*收藏歌单*/
+    addToCollection() {
+      if (this.$store.state.currentUserName != "") {
+        if (this.add == "收藏歌单") {
+          axios
+            .post("http://localhost:3001/api/addListCollection", {
+              username: this.$store.state.currentUserName,
+              listid: this.$route.query.id
+            })
+            .then(response => {
+              // eslint-disable-next-line no-undef
+              app.message = response.data.message;
+              if (response.data.message == "收藏歌单成功") {
+                this.add = "取消收藏"
+                this.$notify({
+                  message: "收藏歌单成功",
+                  type: "success",
+                  duration: 1000
+                });
+              } else {
+                this.$notify({
+                  message: "收藏歌单失败",
+                  type: "danger",
+                  duration: 1000
+                });
+              }
+            });
+        } else if (this.add == "取消收藏") {
+          axios
+            .post("http://localhost:3001/api/deleteListCollection", {
+              username: this.$store.state.currentUserName,
+              listid: this.$route.query.id
+            })
+            .then(response => {
+              // eslint-disable-next-line no-undef
+              console.log(response.data.message);
+              if(response.data.message=="取消收藏成功"){
+                this.add="收藏歌单"
+              }else {
+                this.$notify({
+                  message: "取消收藏失败",
+                  type: "danger",
+                  duration: 1000
+                });
+              }
+            });
+        }
+      } else {
         this.$notify({
           message: "请先登录",
           type: "danger",
