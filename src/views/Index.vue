@@ -31,7 +31,7 @@
         <side-popup></side-popup>
       </van-popup>
     </div>
-    <mini-music-player v-if="showMini" ref="mini"></mini-music-player>
+    <mini-music-player v-if="showMini"></mini-music-player>
   </div>
 </template>
 

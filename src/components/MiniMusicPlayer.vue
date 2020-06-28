@@ -55,11 +55,18 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.currentMusicTime);
     if (this.$store.state.playState == "playing") {
       this.iconChange = "iconfont icon-play-list";
     } else {
       this.iconChange = "iconfont icon-stop";
+      music.src = this.$store.state.currentSongData[0];
+      music.currentTime = this.$store.state.currentMusicTime;
+      music.play();
     }
+  },
+  destroyed() {
+    this.$store.commit("changeCurrentMusicTime", music.currentTime);
   },
   methods: {
     changeState() {
