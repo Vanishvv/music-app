@@ -24,7 +24,11 @@
       <i class="iconfont icon-share"></i>
       <i class="iconfont icon-mic"></i>
     </div>
-    <div class="music-player__gap"></div>
+    <div class="music-player__progress">
+      <span class="music-player__progress__start">{{startTime}}</span>
+      <div class="music-player__progress__bar"></div>
+      <span class="music-player__progress__start">{{endTime}}</span>
+    </div>
     <div class="music-player__control">
       <i class="iconfont icon-last-song" @click="lastSong"></i>
       <div class="music-player__control__center" @click="changeState">
@@ -47,83 +51,73 @@ export default {
       isRotate: false,
       songData: this.$store.state.currentSongData,
       iconChange: "",
-      likeColor: "white"
+      likeColor: "white",
+      startTime:"00:00",
+      endTime:"00:00"
     };
   },
   components: {
     BaseNav
   },
   methods: {
-    async lastSong() {
+    /*切换歌曲的函数*/
+    async changeSong(){
+      music.pause();
+      this.$store.commit("changePlayState", "paused");
+      let cSongId = this.$store.state.currentSongId;
+      let songData = [];
+      let res1 = await axios.get(
+        "http://localhost:3000/song/url?id=" + cSongId
+      );
+      if (res1.status == 200 && res1) {
+        songData[0] = res1.data.data[0].url;
+      }
+      let res = await axios.get(
+        "http://localhost:3000/song/detail?ids=" + cSongId
+      );
+      if (res.status == 200 && res) {
+        songData[1] = res.data.songs[0].name;
+        songData[2] = res.data.songs[0].al.picUrl;
+        songData[3] = res.data.songs[0].ar[0].name;
+      }
+      this.$store.commit("changeCurrentSongData", songData);
+    },
+    /*切换并播放歌曲的函数*/
+    playSong(){
+      this.songData = this.$store.state.currentSongData;
+      music.src = this.songData[0];
+      this.isRotate = true;
+      music.play();
+      this.iconChange = "iconfont icon-pause-music ";
+      this.$store.commit("changePlayState", "paused");
+    },
+    /*点击上一首切换的函数*/
+    lastSong() {
       let tracksIds = this.$store.state.currentTrackIds;
       for (let i = 0; i < tracksIds.length; i++) {
         if (tracksIds[i].id == this.$store.state.currentSongId&&i!=0&&i!=tracksIds.length-1) {
-          music.pause();
-          this.$store.commit("changePlayState", "paused");
           this.$store.commit("changeCurrentSongId", tracksIds[i - 1].id);
-          let cSongId = this.$store.state.currentSongId;
-          let songData = [];
-          let res1 = await axios.get(
-            "http://localhost:3000/song/url?id=" + cSongId
-          );
-          if (res1.status == 200 && res1) {
-            songData[0] = res1.data.data[0].url;
-          }
-          let res = await axios.get(
-            "http://localhost:3000/song/detail?ids=" + cSongId
-          );
-          if (res.status == 200 && res) {
-            songData[1] = res.data.songs[0].name;
-            songData[2] = res.data.songs[0].al.picUrl;
-            songData[3] = res.data.songs[0].ar[0].name;
-          }
-          this.$store.commit("changeCurrentSongData", songData);
+          this.changeSong();
           break;
         }
       }
-      this.songData = this.$store.state.currentSongData;
-      music.src = this.songData[0];
-      this.isRotate = true;
-      music.play();
-      this.iconChange = "iconfont icon-pause-music ";
-      this.$store.commit("changePlayState", "paused");
+      this.playSong();
       this.getSongCollection();
     },
-    async nextSong() {
+    /*点击下一首切换的函数*/
+    nextSong() {
       let tracksIds = this.$store.state.currentTrackIds;
       for (let i = 0; i < tracksIds.length; i++) {
         if (tracksIds[i].id == this.$store.state.currentSongId&&i!=0&&i!=tracksIds.length-1) {
-          music.pause();
-          this.$store.commit("changePlayState", "paused");
           this.$store.commit("changeCurrentSongId", tracksIds[i + 1].id);
-          let cSongId = this.$store.state.currentSongId;
-          let songData = [];
-          let res1 = await axios.get(
-            "http://localhost:3000/song/url?id=" + cSongId
-          );
-          if (res1.status == 200 && res1) {
-            songData[0] = res1.data.data[0].url;
-          }
-          let res = await axios.get(
-            "http://localhost:3000/song/detail?ids=" + cSongId
-          );
-          if (res.status == 200 && res) {
-            songData[1] = res.data.songs[0].name;
-            songData[2] = res.data.songs[0].al.picUrl;
-            songData[3] = res.data.songs[0].ar[0].name;
-          }
-          this.$store.commit("changeCurrentSongData", songData);
+          this.changeSong();
           break;
         }
       }
-      this.songData = this.$store.state.currentSongData;
-      music.src = this.songData[0];
-      this.isRotate = true;
-      music.play();
-      this.iconChange = "iconfont icon-pause-music ";
-      this.$store.commit("changePlayState", "paused");
+      this.playSong();
       this.getSongCollection();
     },
+    /*改变播放状态的函数*/
     changeState() {
       if (this.$store.state.playState == "playing") {
         this.iconChange = "iconfont icon-pause-music";
@@ -158,6 +152,7 @@ export default {
           }
         });
     },
+    /*收藏歌曲或取消收藏歌曲的函数*/
     like() {
       if (this.$store.state.currentUserName != "") {
         if (this.likeColor == "white") {
@@ -216,8 +211,30 @@ export default {
           duration: 1000
         });
       }
+    },
+    /*转换音乐时长格式*/
+    timeToMinute(time) {
+      var t;
+      if(time > -1){
+        var hour = Math.floor(time/3600);
+        var min = Math.floor(time/60) % 60;
+        var sec = time % 60;
+        if(hour < 10) {
+          t = '0'+ hour + ":";
+        } else {
+          t = hour + ":";
+        }
+
+        if(min < 10){t += "0";}
+        t += min + ":";
+        if(sec < 10){t += "0";}
+        t += sec.toFixed(2);
+      }
+      t=t.substring(0,t.length-3);
+      return t;
     }
   },
+  /*初始化播放器页面的函数*/
   mounted() {
     music.currentTime = this.$store.state.currentMusicTime;
     music.src = this.songData[0];
@@ -231,6 +248,10 @@ export default {
       this.iconChange = "iconfont icon-pause-music ";
     }
     this.getSongCollection();
+    setInterval(() => {
+      this.startTime=this.timeToMinute(music.currentTime);
+      this.endTime=this.timeToMinute(music.duration);
+    },500)
   }
 };
 </script>
@@ -289,12 +310,24 @@ $font-color: #3f4543;
       }
     }
   }
-  &__gap {
-    height: 0.05rem;
+  &__progress {
+    display: flex;
+    height: 0.1rem;
     margin-top: 0.8rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    background-color: #cccccc;
+    line-height: 0.1rem;
+    padding-left: 0.9rem;
+    width: 80%;
+    span{
+      font-size: 0.2rem;
+      color: white;
+    }
+    &__bar{
+      width: 6rem;
+      height: 0.05rem;
+      margin-left: 0.15rem;
+      margin-right: 0.15rem;
+      background-color: #cccccc;
+    }
   }
 }
 @keyframes turn {

@@ -9,7 +9,7 @@
       <span
         ><strong>{{ this.title }}</strong></span
       >
-      <van-button round size="small">{{ this.buttonContent }}</van-button>
+      <van-button round size="small" @click="goToMore">{{ this.buttonContent }}</van-button>
     </div>
     <div class="hot-song-list__body">
       <img-card
@@ -60,6 +60,9 @@ export default {
         }
       });
     },
+    goToMore(){
+      this.$router.push('/songList');
+    }
   }
 };
 </script>

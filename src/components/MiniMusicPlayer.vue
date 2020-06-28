@@ -73,7 +73,7 @@ export default {
         music.pause();
       }
     },
-    goLarge(id){
+    goLarge(){
       if(this.$store.state.currentSongId!=""){
         this.$store.commit("changeCurrentMusicTime", music.currentTime);
         music.pause();

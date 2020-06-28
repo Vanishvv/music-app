@@ -23,7 +23,9 @@ import {
   Cell,
   CellGroup,
   Switch,
-  Progress
+  Progress,
+  Tab,
+  Tabs
 } from "vant";
 
 
@@ -47,6 +49,8 @@ Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Switch);
 Vue.use(Progress);
+Vue.use(Tab);
+Vue.use(Tabs);
 
 new Vue({
   router,
