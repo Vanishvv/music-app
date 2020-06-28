@@ -14,6 +14,8 @@
         v-if="!isRotate"
       />
     </div>
+    <div class="music-player__name">{{songData[1]}}</div>
+    <div class="music-player__author">{{songData[3]}}</div>
     <div class="music-player__choice">
       <i
         class="iconfont icon-like"
@@ -268,6 +270,16 @@ $font-color: #3f4543;
   height: 100%;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+  &__name{
+    color: #e2e3de;
+    font-size: 0.5rem;
+    margin-top: 0.2rem;
+  }
+  &__author{
+    color: #e2e3de;
+    font-size: 0.3rem;
+    margin-top: 0.2rem;
+  }
   &__pic {
     background-color: white;
     margin-left: 1.5rem;
@@ -282,7 +294,7 @@ $font-color: #3f4543;
     }
   }
   &__choice {
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     color: white;

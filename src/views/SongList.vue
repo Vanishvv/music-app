@@ -28,12 +28,14 @@
         </div>
       </van-tab>
     </van-tabs>
+    <mini-music-player></mini-music-player>
   </div>
 </template>
 
 <script>
 import BaseNav from "../components/BaseNav";
 import ImgCard from "../components/ImgCard";
+import MiniMusicPlayer from "../components/MiniMusicPlayer";
 import axios from "axios";
 export default {
   name: "",
@@ -75,7 +77,8 @@ export default {
   },
   components: {
     BaseNav,
-    ImgCard
+    ImgCard,
+    MiniMusicPlayer
   },
   mounted() {
     this.getList();
