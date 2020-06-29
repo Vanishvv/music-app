@@ -1,13 +1,15 @@
 /**
- * @Author:Wang Jun
- * @Date:2020/6/23/023 14:03
- * @Description:发现页面轮播图
- */
+* @Author:Wang Jun
+* @Date:2020/6/23/023 14:03
+* @Description:发现页面轮播图
+*/
 <template>
   <div class="swipe">
     <van-swipe :autoplay="5000" indicator-color="#dd001b">
       <van-swipe-item v-for="(item, index) in swiperList" :key="index">
+        <!--轮播图片-->
         <img class="swipe__img" :src="item.pic" alt />
+        <!--右下角信息-->
         <span class="swipe__title" :style="{ background: item.titleColor }">{{
           item.typeTitle
         }}</span>
@@ -26,12 +28,14 @@ export default {
     };
   },
   mounted() {
+    /*初始化轮播图数据*/
     this.getSwipeImages();
   },
   methods: {
+    /*异步获取轮播图数据并赋值给swiperList*/
     async getSwipeImages() {
       let res = await axios.get("http://localhost:3000/banner?type=2");
-      if (res.status == 200 && res) {
+      if (res.status === 200 && res) {
         this.swiperList = res.data.banners;
       }
     }
@@ -40,20 +44,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.swipe {
-  width: 100%;
-  height: 4rem;
+@mixin img-size($width) {
+  height: 3.8rem;
   border-radius: 0.2rem 0.2rem;
+  width: $width;
+}
+.swipe {
+  @include img-size(100%);
   &__img {
-    width: 90%;
-    height: 3.8rem;
-    border-radius: 0.2rem 0.2rem;
+    @include img-size(90%);
   }
   &__title {
     position: absolute;
     right: 5%;
     bottom: 0.15rem;
-    color: #fff;
+    color: white;
     font-size: 0.35rem;
     padding: 0.1rem 0.3rem;
     opacity: 0.8;

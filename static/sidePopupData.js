@@ -1,3 +1,8 @@
+/**
+ * @Author:Wang Jun
+ * @Date:2020/6/29/029 16:23
+ * @Description:侧边栏数据
+ */
 module.exports = {
   data: {
     iconsData: [

@@ -5,24 +5,32 @@
 */
 <template>
   <div class="personal-page">
+    <!--用户名称-->
     <div class="personal-page__head">
       {{ username }}
     </div>
     <div class="personal-page__content">
       <div class="personal-page__content__my-music">
         <div class="personal-page__content__my-music__head">
+          <!--我喜欢的音乐标题-->
           <span
             ><strong>{{ myMusicTitle }}</strong></span
           >
-          <van-button round size="small" @click="goToDetail">{{ this.buttonContent }}</van-button>
+          <!--查看更多按钮-->
+          <van-button round size="small" @click="goToDetail">{{
+            this.buttonContent
+          }}</van-button>
         </div>
+        <!--我喜欢的音乐列表摘要-->
         <song-list-content :songTracks="myMusic"></song-list-content>
       </div>
+      <!--我收藏的歌单标题-->
       <strong>{{ listTitle }}</strong>
       <div
         class="personal-page__content__list-colletcion"
         v-if="this.$store.state.currentUserName"
       >
+        <!--歌单展示卡片-->
         <img-card
           v-for="(item, index) in imgCardData"
           :key="index"
@@ -44,7 +52,7 @@
 <script>
 var listIdData = [];
 var songIdData = [];
-var traksId=[];
+var traksId = [];
 import SongListContent from "../components/SongListBase/SongListContent";
 import axios from "axios";
 import ImgCard from "../components/ImgCard";
@@ -65,19 +73,23 @@ export default {
     ImgCard
   },
   mounted() {
+    /*初始化我的页面的收藏歌单*/
     this.getListCollection();
+    /*初始化我的页面的喜欢的歌曲*/
     this.getSongCollection();
   },
   methods: {
-    goToDetail(){
-      if(this.$store.state.currentUserName!=""){
-        this.$router.push('/mySongList');
-      }else{
+    /*跳转到我喜欢的音乐页面*/
+    goToDetail() {
+      if (this.$store.state.currentUserName !== "") {
+        this.$router.push("/mySongList");
+      } else {
         this.$dialog.alert({
           message: "请先登录账号"
         });
       }
     },
+    /*查看歌单详情*/
     goListDetial(id) {
       this.$router.push({
         name: "songListDetail",
@@ -86,6 +98,7 @@ export default {
         }
       });
     },
+    /*获取我收藏的歌单数据*/
     async getListCollection() {
       await axios
         .get("http://localhost:3001/api/getListCollection")
@@ -98,7 +111,7 @@ export default {
           for (let i = 0; i < app.arr.length; i++) {
             if (
               // eslint-disable-next-line no-undef
-              app.arr[i].username == this.$store.state.currentUserName
+              app.arr[i].username === this.$store.state.currentUserName
             ) {
               // eslint-disable-next-line no-undef
               listIdData[j] = app.arr[i].listid;
@@ -121,6 +134,7 @@ export default {
         }
       }
     },
+    /*获取我喜欢的音乐数据*/
     async getSongCollection() {
       await axios
         .get("http://localhost:3001/api/getSongCollection")
@@ -133,7 +147,7 @@ export default {
           for (let i = 0; i < app.arr.length; i++) {
             if (
               // eslint-disable-next-line no-undef
-              app.arr[i].username == this.$store.state.currentUserName
+              app.arr[i].username === this.$store.state.currentUserName
             ) {
               // eslint-disable-next-line no-undef
               songIdData[j] = app.arr[i].songid;
@@ -141,10 +155,10 @@ export default {
             }
           }
         });
-      for(let i=0;i<songIdData.length;i++){
-        var obj1={
-          id:songIdData[i]
-        }
+      for (let i = 0; i < songIdData.length; i++) {
+        var obj1 = {
+          id: songIdData[i]
+        };
         traksId.push(obj1);
       }
       this.$store.commit("changeCurrentTrackIds", traksId);
@@ -152,12 +166,12 @@ export default {
         let res = await axios.get(
           "http://localhost:3000/song/detail?ids=" + songIdData[i]
         );
-        if (res.status == 200 && res) {
-          var obj={
-            id:songIdData[i],
-            name:res.data.songs[0].al.name,
-            ar:res.data.songs[0].ar
-          }
+        if (res.status === 200 && res) {
+          var obj = {
+            id: songIdData[i],
+            name: res.data.songs[0].al.name,
+            ar: res.data.songs[0].ar
+          };
           this.myMusic.push(obj);
         }
       }
@@ -167,35 +181,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$font-color: #3f4543;
+@mixin flex() {
+  display: flex;
+  justify-content: space-between;
+}
 .personal-page {
   &__head {
-    padding-top: 1rem;
-    padding-bottom: 1.2rem;
+    background-image: linear-gradient(135deg, #6c7b74, #3f4543);
+    padding: 1rem 0 1.2rem 0;
     color: white;
-    background-image: linear-gradient(135deg, #6c7b74, $font-color);
     font-size: 0.8rem;
   }
   &__content {
     background-color: white;
     margin-top: -0.5rem;
-    height: 8rem;
     border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.5rem 0.5rem 0;
+    height: 8rem;
     text-align: left;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
     font-size: 0.4rem;
     &__my-music {
       height: 6rem;
       &__head {
-        display: flex;
-        justify-content: space-between;
+        @include flex();
       }
     }
     &__list-colletcion {
-      display: flex;
-      justify-content: space-between;
+      @include flex();
       flex-wrap: wrap;
       margin-bottom: 1.5rem;
       &__title {

@@ -1,7 +1,14 @@
+/**
+ * @Author:Wang Jun
+ * @Date:2020/6/29/029 15:00
+ * @Description:侧边栏组件
+ */
 <template>
   <div class="side-popup">
     <div class="side-popup__head">
+      <!--登录成功后显示用户名-->
       <span v-if="userName">{{ userName }}</span>
+      <!--未登录显示登录按钮-->
       <van-button
         round
         type="info"
@@ -12,26 +19,33 @@
         >登录</van-button
       >
     </div>
+    <!--侧边顶部按钮栏-->
     <div class="side-popup__icons  van-hairline--bottom">
       <div
         class="side-popup__icons__item"
         v-for="(item, index) in sidePopupInfo.iconsData"
         :key="index"
       >
+        <!--按钮icon的class名-->
         <i :class="item.iconName"></i>
+        <!--按钮的名称-->
         <span>{{ item.name }}</span>
       </div>
     </div>
+    <!--侧边功能列表-->
     <div class="side-popup__list van-hairline--bottom">
       <div
         class="side-popup__list__item"
         v-for="(item, index) in sidePopupInfo.listData"
         :key="index"
       >
+        <!--功能列表条目的图标class名-->
         <i :class="item.iconName"></i>
+        <!--功能列表条目名称-->
         <span>{{ item.name }}</span>
       </div>
     </div>
+    <!--侧边底部按钮栏-->
     <div class="side-popup__footer">
       <div
         class="side-popup__footer__item"
@@ -39,7 +53,9 @@
         :key="index"
         @click="goSetting(item.name)"
       >
+        <!--按钮图标class名-->
         <i :class="item.iconName"></i>
+        <!--按钮名称-->
         <span>{{ item.name }}</span>
       </div>
     </div>
@@ -52,43 +68,56 @@ export default {
   name: "",
   data() {
     return {
-      userName: this.$store.state.currentUserName,
-      sidePopupInfo: sidePopupData.data
+      userName: this.$store.state.currentUserName, //当前用户名
+      sidePopupInfo: sidePopupData.data //侧边栏数据
     };
   },
   methods: {
+    /*跳转到登录页面*/
     goLogin() {
       this.$router.push("/login");
     },
-    goSetting(name){
-      if(name=="设置"){
+    /*跳转到设置页面*/
+    goSetting(name) {
+      if (name === "设置") {
         this.$router.push("/settings");
       }
     }
-  },
-  components: {}
+  }
 };
 </script>
 
 <style scoped lang="scss">
-.side-popup {
+@mixin flex($text-align) {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  text-align: $text-align;
+}
+@mixin icons-flex($padding) {
+  display: flex;
+  justify-content: space-between;
+  padding: $padding;
+}
+@mixin height-and-size($line-height, $font-size) {
+  line-height: $line-height;
+  font-size: $font-size;
+}
+@mixin item($line-height) {
+  display: flex;
+  justify-items: center;
+  line-height: $line-height;
+}
+$font-color: #333333;
+.side-popup {
+  @include flex(left);
   font-size: 0.7rem;
-  padding-left: 0.55rem;
-  padding-top: 0.8rem;
+  padding: 0.8rem 0 0 0.55rem;
   &__icons {
-    margin-top: 0.4rem;
-    padding-bottom: 0.5rem;
-    padding-right: 0.5rem;
+    @include icons-flex(0 0.5rem 0.5rem 0);
     font-size: 0.3rem;
-    display: flex;
-    justify-content: space-between;
+    margin-top: 0.4rem;
     &__item {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
+      @include flex(center);
       color: #6c7b74;
       i {
         font-size: 0.7rem;
@@ -97,47 +126,35 @@ export default {
     }
   }
   &__list {
+    color: $font-color;
     margin-top: 0.5rem;
-    color: #333333;
     padding-bottom: 0.4rem;
     &__item {
-      display: flex;
-      justify-items: center;
-      height: 1.3rem;
+      @include item(1.3rem);
     }
     i {
-      font-size: 0.6rem;
-      line-height: 1.3rem;
+      @include height-and-size(1.3rem, 0.6rem);
     }
     span {
-      line-height: 1.3rem;
-      font-size: 0.4rem;
+      @include height-and-size(1.3rem, 0.4rem);
       margin-left: 0.2rem;
     }
   }
   &__head {
-    color: #333333;
+    color: $font-color;
     padding-left: 0.1rem;
   }
   &__footer {
-    color: #333333;
-    display: flex;
-    padding-right: 0.5rem;
-    justify-content: space-between;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
+    @include icons-flex(0.1rem 0.5rem 0.1rem 0);
+    color: $font-color;
     &__item {
-      line-height: 1rem;
-      display: flex;
-      justify-items: center;
+      @include item(1rem);
     }
     i {
-      font-size: 0.6rem;
-      line-height: 1rem;
+      @include height-and-size(1rem, 0.6rem);
     }
     span {
-      font-size: 0.4rem;
-      line-height: 1rem;
+      @include height-and-size(1rem, 0.4rem);
     }
   }
 }

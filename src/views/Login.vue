@@ -1,46 +1,45 @@
 /**
- * @Author:Wang Jun
- * @Date:2020/6/25/025 22:22
- * @Description:登录页面
- */
+* @Author:Wang Jun
+* @Date:2020/6/25/025 22:22
+* @Description:登录页面
+*/
 <template>
   <div class="login">
     <base-nav :title="loginTitle"></base-nav>
+    <!--表单标题-->
     <div class="login__title">{{ title }}</div>
     <form class="login__form">
+      <!--用户名输入框-->
       <p class="form">
         <input
           class="login__form__username"
           type="text"
-          id="user"
           placeholder="Username"
-          name="username"
           v-model="username"
         />
       </p>
+      <!--密码输入框-->
       <p class="form">
         <input
           class="login__form__userpwd"
           type="password"
-          id="passwd"
           placeholder="Password"
-          name="userpwd"
           v-model="userpwd"
         />
       </p>
     </form>
+    <!--登录按钮-->
     <input
       type="submit"
       value="Log in"
       class="login__form__login"
-      style="margin-right: 10px;"
       @click="login"
     />
+    <!--注册按钮-->
     <input
       type="submit"
       value="Register"
       class="login__form__register"
-      style="margin-right: 10px;"
       @click="jumpToRegister"
     />
   </div>
@@ -63,9 +62,11 @@ export default {
     BaseNav
   },
   methods: {
+    /*跳转到注册页面*/
     jumpToRegister() {
       this.$router.push({ path: "/register" });
     },
+    /*登录函数*/
     login() {
       var username = this.username;
       var userpwd = this.userpwd;
@@ -83,7 +84,7 @@ export default {
               this.$dialog.alert({
                 message: "登录成功，跳转到首页"
               });
-              this.$store.commit('changeCurrentUserName', this.username);
+              this.$store.commit("changeCurrentUserName", this.username);
               this.$router.push("/");
             } else {
               this.$dialog.alert({
@@ -92,7 +93,7 @@ export default {
             }
           }
         }
-        if (flag == false) {
+        if (flag === false) {
           console.log("用户名不存在");
         }
       });
@@ -102,12 +103,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@mixin field($width, $font-size) {
+  height: 1.2rem;
+  width: $width;
+  border-radius: 1rem;
+  border: none;
+  font-size: $font-size;
+}
+$theme-color: #c62f2f;
 .login {
   height: 100%;
-  background-color: #c62f2f;
+  background-color: $theme-color;
   color: white;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
+  padding: 0 0.8rem 0;
   &__title {
     margin-top: 2.5rem;
     color: white;
@@ -116,27 +124,20 @@ export default {
   &__form {
     &__username,
     &__userpwd {
-      border-radius: 1rem;
-      border: none;
-      height: 1.3rem;
-      width: 80%;
+      @include field(80%, 0.4rem);
       padding-left: 0.5rem;
-      font-size: 0.4rem;
       color: #333333;
     }
     &__login,
     &__register {
+      @include field(40%, 0.5rem);
       background-color: white;
-      color: #c62f2f;
-      width: 40%;
-      height: 1.2rem;
-      border: none;
-      border-radius: 1rem;
-      font-size: 0.5rem;
+      color: $theme-color;
     }
     &__login {
       background-color: #42b983;
       color: white;
+      margin-right: 0.3rem;
     }
   }
 }

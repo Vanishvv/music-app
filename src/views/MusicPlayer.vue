@@ -1,13 +1,15 @@
 /**
- * @Author:Wang Jun
- * @Date:2020/6/27/027 21:27
- * @Description:音乐播放页面
- */
+* @Author:Wang Jun
+* @Date:2020/6/27/027 21:27
+* @Description:音乐播放页面
+*/
 <template>
   <div class="music-player">
+    <!--返回按钮-->
     <div class="music-player__nav">
       <i class="iconfont icon-go-back" @click="goback"></i>
     </div>
+    <!--歌曲图片-->
     <div class="music-player__pic">
       <img class="music-player__pic__turn" :src="songData[2]" v-if="isRotate" />
       <img
@@ -16,8 +18,11 @@
         v-if="!isRotate"
       />
     </div>
-    <div class="music-player__name">{{songData[1]}}</div>
-    <div class="music-player__author">{{songData[3]}}</div>
+    <!--歌曲名称-->
+    <div class="music-player__name">{{ songData[1] }}</div>
+    <!--歌曲演唱者-->
+    <div class="music-player__author">{{ songData[3] }}</div>
+    <!--歌曲选项-->
     <div class="music-player__choice">
       <i
         class="iconfont icon-like"
@@ -28,16 +33,22 @@
       <i class="iconfont icon-share"></i>
       <i class="iconfont icon-mic"></i>
     </div>
+    <!--进度条-->
     <div class="music-player__progress">
-      <span class="music-player__progress__start">{{startTime}}</span>
+      <!--当前播放时间-->
+      <span class="music-player__progress__start">{{ startTime }}</span>
       <div class="music-player__progress__bar"></div>
-      <span class="music-player__progress__start">{{endTime}}</span>
+      <!--音乐总时长-->
+      <span class="music-player__progress__start">{{ endTime }}</span>
     </div>
     <div class="music-player__control">
+      <!--上一首-->
       <i class="iconfont icon-last-song" @click="changeSong(1)"></i>
+      <!--播放/暂停-->
       <div class="music-player__control__center" @click="changeState">
         <i :class="iconChange"></i>
       </div>
+      <!--下一首-->
       <i class="iconfont icon-next-song" @click="changeSong(2)"></i>
     </div>
   </div>
@@ -55,18 +66,19 @@ export default {
       songData: this.$store.state.currentSongData,
       iconChange: "",
       likeColor: "white",
-      startTime:"00:00",
-      endTime:"00:00"
+      startTime: "00:00",
+      endTime: "00:00"
     };
   },
   methods: {
-    goback(){
+    /*返回上一页*/
+    goback() {
       this.$store.commit("changeCurrentMusicTime", music.currentTime);
       music.pause();
       this.$router.go(-1);
     },
     /*切换并播放歌曲的函数*/
-    playSong(){
+    playSong() {
       this.songData = this.$store.state.currentSongData;
       music.src = this.songData[0];
       this.isRotate = true;
@@ -78,10 +90,14 @@ export default {
     async changeSong(num) {
       let tracksIds = this.$store.state.currentTrackIds;
       for (let i = 0; i < tracksIds.length; i++) {
-        if (tracksIds[i].id == this.$store.state.currentSongId&&i!=0&&i!=tracksIds.length-1) {
-          if(num==1){
+        if (
+          tracksIds[i].id === this.$store.state.currentSongId &&
+          i !== 0 &&
+          i !== tracksIds.length - 1
+        ) {
+          if (num === 1) {
             this.$store.commit("changeCurrentSongId", tracksIds[i - 1].id);
-          }else if(num==2){
+          } else if (num === 2) {
             this.$store.commit("changeCurrentSongId", tracksIds[i + 1].id);
           }
           let cSongId = this.$store.state.currentSongId;
@@ -89,13 +105,13 @@ export default {
           let res1 = await axios.get(
             "http://localhost:3000/song/url?id=" + cSongId
           );
-          if (res1.status == 200 && res1) {
+          if (res1.status === 200 && res1) {
             songData[0] = res1.data.data[0].url;
           }
           let res = await axios.get(
             "http://localhost:3000/song/detail?ids=" + cSongId
           );
-          if (res.status == 200 && res) {
+          if (res.status === 200 && res) {
             songData[1] = res.data.songs[0].name;
             songData[2] = res.data.songs[0].al.picUrl;
             songData[3] = res.data.songs[0].ar[0].name;
@@ -111,7 +127,7 @@ export default {
     },
     /*改变播放状态的函数*/
     changeState() {
-      if (this.$store.state.playState == "playing") {
+      if (this.$store.state.playState === "playing") {
         this.iconChange = "iconfont icon-pause-music";
         this.$store.commit("changePlayState", "paused");
         this.isRotate = true;
@@ -134,9 +150,9 @@ export default {
           for (let i = 0; i < app.arr.length; i++) {
             if (
               // eslint-disable-next-line no-undef
-              app.arr[i].songid == this.$store.state.currentSongId &&
+              app.arr[i].songid === this.$store.state.currentSongId &&
               // eslint-disable-next-line no-undef
-              app.arr[i].username == this.$store.state.currentUserName
+              app.arr[i].username === this.$store.state.currentUserName
             ) {
               this.likeColor = "red";
               break;
@@ -146,8 +162,8 @@ export default {
     },
     /*收藏歌曲或取消收藏歌曲的函数*/
     like() {
-      if (this.$store.state.currentUserName != "") {
-        if (this.likeColor == "white") {
+      if (this.$store.state.currentUserName !== "") {
+        if (this.likeColor === "white") {
           axios
             .post("http://localhost:3001/api/addSongCollection", {
               username: this.$store.state.currentUserName,
@@ -156,7 +172,7 @@ export default {
             .then(response => {
               // eslint-disable-next-line no-undef
               app.message = response.data.message;
-              if (response.data.message == "收藏歌曲成功") {
+              if (response.data.message === "收藏歌曲成功") {
                 this.likeColor = "red";
                 this.$notify({
                   message: "收藏歌曲成功",
@@ -171,7 +187,7 @@ export default {
                 });
               }
             });
-        } else if (this.likeColor == "red") {
+        } else if (this.likeColor === "red") {
           axios
             .post("http://localhost:3001/api/deleteSongCollection", {
               username: this.$store.state.currentUserName,
@@ -180,7 +196,7 @@ export default {
             .then(response => {
               // eslint-disable-next-line no-undef
               console.log(response.data.message);
-              if (response.data.message == "取消收藏成功") {
+              if (response.data.message === "取消收藏成功") {
                 this.likeColor = "white";
                 this.$notify({
                   message: "取消收藏成功",
@@ -207,23 +223,27 @@ export default {
     /*转换音乐时长格式*/
     timeToMinute(time) {
       var t;
-      if(time > -1){
-        var hour = Math.floor(time/3600);
-        var min = Math.floor(time/60) % 60;
+      if (time > -1) {
+        var hour = Math.floor(time / 3600);
+        var min = Math.floor(time / 60) % 60;
         var sec = time % 60;
-        if(hour < 10) {
-          t = '0'+ hour + ":";
+        if (hour < 10) {
+          t = "0" + hour + ":";
         } else {
           t = hour + ":";
         }
 
-        if(min < 10){t += "0";}
+        if (min < 10) {
+          t += "0";
+        }
         t += min + ":";
-        if(sec < 10){t += "0";}
+        if (sec < 10) {
+          t += "0";
+        }
         t += sec.toFixed(2);
       }
-      if(t){
-        t=t.substring(0,t.length-3);
+      if (t) {
+        t = t.substring(0, t.length - 3);
       }
       return t;
     }
@@ -232,7 +252,7 @@ export default {
   mounted() {
     music.src = this.$store.state.currentSongData[0];
     music.currentTime = this.$store.state.currentMusicTime;
-    if (this.$store.state.playState == "playing") {
+    if (this.$store.state.playState === "playing") {
       this.isRotate = false;
       music.pause();
       this.iconChange = "iconfont icon-play-music";
@@ -243,49 +263,55 @@ export default {
     }
     this.getSongCollection();
     setInterval(() => {
-      this.startTime=this.timeToMinute(music.currentTime);
-      this.endTime=this.timeToMinute(music.duration);
-    },500)
+      this.startTime = this.timeToMinute(music.currentTime);
+      this.endTime = this.timeToMinute(music.duration);
+    }, 500);
   }
 };
 </script>
 
 <style scoped lang="scss">
-$font-color: #3f4543;
+@mixin font-set($font-size) {
+  font-size: $font-size;
+  color: #e2e3de;
+  margin-top: 0.2rem;
+}
 @mixin pic {
   border-radius: 6rem;
   height: 6rem;
   width: 6rem;
 }
+@mixin flex($font-size) {
+  margin-top: 1rem;
+  padding: 0 0.5rem 0;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  i {
+    font-size: $font-size;
+  }
+}
 .music-player {
-  background-image: linear-gradient(135deg, #6c7b74, $font-color);
+  background-image: linear-gradient(135deg, #6c7b74, #3f4543);
   height: 100%;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  &__nav{
+  padding: 0 0.5rem 0;
+  &__nav {
     color: white;
     text-align: left;
-    font-size: 0.5rem;
     padding-top: 0.4rem;
     i {
       font-size: 0.5rem;
-      margin-right: 0.5rem;
     }
   }
-  &__name{
-    color: #e2e3de;
-    font-size: 0.5rem;
-    margin-top: 0.2rem;
+  &__name {
+    @include font-set(0.5rem);
   }
-  &__author{
-    color: #e2e3de;
-    font-size: 0.3rem;
-    margin-top: 0.2rem;
+  &__author {
+    @include font-set(0.3rem);
   }
   &__pic {
     background-color: white;
-    margin-left: 1.5rem;
-    margin-top: 2.5rem;
+    margin: 2.5rem 0 0 1.5rem;
     @include pic();
     &__static {
       @include pic();
@@ -296,28 +322,11 @@ $font-color: #3f4543;
     }
   }
   &__choice {
-    margin-top: 1.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    i {
-      font-size: 0.7rem;
-    }
+    @include flex(0.7rem);
   }
   &__control {
-    margin-top: 1rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    justify-items: center;
+    @include flex(0.8rem);
     line-height: 1.5rem;
-    i {
-      font-size: 0.8rem;
-    }
     &__center {
       i {
         font-size: 1.5rem;
@@ -327,23 +336,22 @@ $font-color: #3f4543;
   &__progress {
     display: flex;
     height: 0.1rem;
-    margin-top: 0.8rem;
     line-height: 0.1rem;
-    padding-left: 0.9rem;
+    margin: 0.8rem 0 0 0.9rem;
     width: 80%;
-    span{
+    span {
       font-size: 0.2rem;
       color: white;
     }
-    &__bar{
+    &__bar {
       width: 6rem;
       height: 0.05rem;
-      margin-left: 0.15rem;
-      margin-right: 0.15rem;
+      margin: 0 0.15rem 0;
       background-color: #cccccc;
     }
   }
 }
+/*图片旋转动画*/
 @keyframes turn {
   0% {
     -webkit-transform: rotate(0deg);

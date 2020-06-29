@@ -6,52 +6,51 @@
 <template>
   <div class="register">
     <base-nav :title="loginTitle"></base-nav>
+    <!--注册页面标题-->
     <div class="register__title">{{ title }}</div>
     <form class="register__form">
+      <!--用户名输入框-->
       <p class="form">
         <input
           class="register__form__username"
           type="text"
-          id="user"
           placeholder="Username"
-          name="username"
           v-model="username"
           @blur="checkName"
         />
       </p>
+      <!--密码输入框-->
       <p class="form">
         <input
           class="register__form__userpwd"
           type="password"
-          id="passwd"
           placeholder="Password"
-          name="userpwd"
           v-model="userpwd"
         />
       </p>
+      <!--确认密码输入框-->
       <p class="form">
         <input
           class="register__form__confirm-userpwd"
           type="password"
-          id="passwd-confirm"
           placeholder="Confirm password"
           v-model="userpwdConfirm"
           @blur="checkPasspwdConfirm"
         />
       </p>
     </form>
+    <!--登录按钮-->
     <input
       type="submit"
       value="Log in"
       class="register__form__login"
-      style="margin-right: 10px;"
       @click="jumpToLogin"
     />
+    <!--注册按钮-->
     <input
       type="submit"
       value="Register"
       class="register__form__register"
-      style="margin-right: 10px;"
       @click="register"
     />
   </div>
@@ -79,11 +78,13 @@ export default {
     BaseNav
   },
   methods: {
+    /*跳转到登陆页面*/
     jumpToLogin() {
       this.$router.push({ path: "/login" });
     },
+    /*验证两次输入的密码是否一致*/
     checkPasspwdConfirm() {
-      if (this.userpwd != this.userpwdConfirm) {
+      if (this.userpwd !== this.userpwdConfirm) {
         this.$notify({
           message: "密码不一致",
           type: "danger",
@@ -94,6 +95,7 @@ export default {
         isPwdCorrect = true;
       }
     },
+    /*验证用户名是否已存在*/
     checkName() {
       axios.get("http://localhost:3001/api/login").then(response => {
         // eslint-disable-next-line no-undef
@@ -101,7 +103,7 @@ export default {
         // eslint-disable-next-line no-undef
         for (let i = 0; i < app.arr.length; i++) {
           // eslint-disable-next-line no-undef
-          if (app.arr[i].username.trim() == this.username.trim()) {
+          if (app.arr[i].username.trim() === this.username.trim()) {
             this.$notify({
               message: "用户名已存在",
               type: "danger",
@@ -115,6 +117,7 @@ export default {
         }
       });
     },
+    /*注册*/
     register() {
       if (isUserExist && isPwdCorrect) {
         axios
@@ -126,7 +129,7 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-undef
             app.message = response.data.message;
-            if (response.data.message == "注册成功") {
+            if (response.data.message === "注册成功") {
               this.$dialog.alert({
                 message: "注册成功，跳转到首页"
               });
@@ -145,12 +148,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@mixin field($width, $font-size) {
+  height: 1.2rem;
+  width: $width;
+  border-radius: 1rem;
+  border: none;
+  font-size: $font-size;
+}
+$theme-color: #c62f2f;
 .register {
   height: 100%;
-  background-color: #c62f2f;
+  background-color: $theme-color;
   color: white;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
+  padding: 0 0.8rem 0;
   &__title {
     color: white;
     font-size: 1rem;
@@ -160,27 +170,20 @@ export default {
     &__username,
     &__userpwd,
     &__confirm-userpwd {
-      border-radius: 1rem;
-      border: none;
-      height: 1.3rem;
-      width: 80%;
+      @include field(80%, 0.4rem);
       padding-left: 0.5rem;
-      font-size: 0.4rem;
       color: #333333;
     }
     &__login,
     &__register {
+      @include field(40%, 0.5rem);
       background-color: white;
-      color: #c62f2f;
-      width: 40%;
-      height: 1.2rem;
-      border: none;
-      border-radius: 1rem;
-      font-size: 0.5rem;
+      color: $theme-color;
     }
     &__register {
       background-color: #42b983;
       color: white;
+      margin-left: 0.3rem;
     }
   }
 }

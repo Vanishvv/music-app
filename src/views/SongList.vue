@@ -1,11 +1,13 @@
 /**
- * @Author:Wang Jun
- * @Date:2020/6/28/028 13:01
- * @Description:歌单广场
- */
+* @Author:Wang Jun
+* @Date:2020/6/28/028 13:01
+* @Description:歌单广场
+*/
 <template>
   <div class="song-list">
+    <!--导航栏-->
     <base-nav class="song-list__nav" :title="title"></base-nav>
+    <!--标签页-->
     <van-tabs v-model="active" animated>
       <van-tab
         v-for="(listItem, index) in listData"
@@ -14,6 +16,7 @@
         :name="listItem.name"
       >
         <div class="song-list__content">
+          <!--歌单列表卡片-->
           <img-card
             v-for="(item, index) in listItem.imgCardData"
             :key="index"
@@ -28,6 +31,7 @@
         </div>
       </van-tab>
     </van-tabs>
+    <!--mini音乐播放器-->
     <mini-music-player></mini-music-player>
   </div>
 </template>
@@ -81,15 +85,17 @@ export default {
     MiniMusicPlayer
   },
   mounted() {
+    /*初始化歌单广场页面*/
     this.getList();
   },
   methods: {
+    /*异步获取歌单广场数据并赋值*/
     async getList() {
       for (let i = 0; i < this.listData.length; i++) {
         let res = await axios.get(
           "http://localhost:3000/top/playlist?cat=" + this.listData[i].name
         );
-        if (res.status == 200 && res) {
+        if (res.status === 200 && res) {
           var list = res.data.playlists;
           for (let j = 0; j < list.length; j++) {
             var datas = {
@@ -103,6 +109,7 @@ export default {
         }
       }
     },
+    /*跳转到歌单详情页*/
     goListDetial(id) {
       this.$router.push({
         name: "songListDetail",
@@ -110,7 +117,7 @@ export default {
           id: id
         }
       });
-    },
+    }
   }
 };
 </script>
@@ -119,16 +126,13 @@ export default {
 .song-list {
   &__nav {
     color: #333333;
-    margin-bottom: 0.5rem;
-    padding-left: 0.5rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
   }
   &__content {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
-    margin-bottom: 1.5rem;
+    padding: 0 0.4rem 1.5rem;
     &__title {
       font-size: 0.32rem;
       text-align: left;

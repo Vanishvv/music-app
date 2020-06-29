@@ -1,8 +1,8 @@
 /**
- * @Author:Wang Jun
- * @Date:2020/6/24/024 17:23
- * @Description:歌单详情页功能选项
- */
+* @Author:Wang Jun
+* @Date:2020/6/24/024 17:23
+* @Description:歌单详情页功能选项
+*/
 <template>
   <div class="list-choice">
     <div
@@ -11,13 +11,16 @@
       :key="index"
       @click="handle(choiceItem.name)"
     >
+      <!--图标class名-->
       <i :class="choiceItem.iconName"></i>
+      <!--图标下显示文字-->
       <span>{{ choiceItem.choiceName }}</span>
     </div>
+    <!--分享上滑框组件-->
     <van-share-sheet
-            v-model="showShare"
-            title="立即分享给好友"
-            :options="options"
+      v-model="showShare"
+      :title="shareTitle"
+      :options="options"
     />
   </div>
 </template>
@@ -28,21 +31,17 @@ export default {
   name: "",
   data() {
     return {
-      choiceData: choiceInfo.data,
-      showShare: false,
-      options: [
-        { name: '微信', icon: 'wechat' },
-        { name: '微博', icon: 'weibo' },
-        { name: '复制链接', icon: 'link' },
-        { name: '分享海报', icon: 'poster' },
-        { name: '二维码', icon: 'qrcode' },
-      ],
+      choiceData: choiceInfo.data, //图表信息
+      showShare: false, //显示分享滑出框
+      options: choiceInfo.shareOptions, //分享框内容数据
+      shareTitle: "立即分享给好友" //分享框标题
     };
   },
-  methods:{
-    handle(data){
-      if(data=='share'){
-        this.showShare=true;
+  methods: {
+    /*van-share-sheet自带处理函数*/
+    handle(data) {
+      if (data === "share") {
+        this.showShare = true;
       }
     }
   }

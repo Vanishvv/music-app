@@ -1,3 +1,8 @@
+/**
+* @Author:Wang Jun
+* @Date:2020/6/29/029 15:36
+* @Description:排行榜组件
+*/
 <template>
   <div class="learder-board">
     <base-nav class="learder-board__nav" :title="title"></base-nav>
@@ -33,24 +38,25 @@ export default {
     BoardCard
   },
   methods: {
+    /*异步获取排行榜数据*/
     async getOfficial() {
       let res = await axios.get("http://localhost:3000/toplist/detail");
-      if (res.status == 200 && res) {
-        var tmp=res.data.list;
-        for(let i=0;i<4;i++){
-          var obj={
-            picUrl:tmp[i].coverImgUrl,
-            title:tmp[i].updateFrequency,
-            track:tmp[i].tracks,
-            id:tmp[i].id
-          }
+      if (res.status === 200 && res) {
+        var tmp = res.data.list;
+        for (let i = 0; i < 4; i++) {
+          var obj = {
+            picUrl: tmp[i].coverImgUrl,
+            title: tmp[i].updateFrequency,
+            track: tmp[i].tracks,
+            id: tmp[i].id
+          };
           this.cardData.push(obj);
         }
-        console.log(this.cardData);
       }
     }
   },
   mounted() {
+    /*初始化排行榜页面*/
     this.getOfficial();
   }
 };
@@ -58,16 +64,15 @@ export default {
 
 <style scoped lang="scss">
 .learder-board {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0 0.5rem 0;
   &__nav {
     color: #333333;
+    margin-bottom: 0.5rem;
   }
-  &__official{
-    margin-top: 0.5rem;
+  &__official {
     display: flex;
     flex-direction: column;
-    &__item{
+    &__item {
       margin-top: 0.5rem;
     }
   }

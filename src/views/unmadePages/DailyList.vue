@@ -1,10 +1,10 @@
 /**
  * @Author:Wang Jun
- * @Date:2020/6/22/022 23:44
- * @Description:云村页面
+ * @Date:2020/6/29/029 15:06
+ * @Description:日推页面(未做)
  */
 <template>
-<div></div>
+
 </template>
 
 <script>

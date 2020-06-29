@@ -5,8 +5,11 @@
 */
 <template>
   <div>
+    <!--轮播组件-->
     <swipe></swipe>
+    <!--圆形菜单栏组件-->
     <circle-menu :menuData="findInfo.circleMenuData"></circle-menu>
+    <!--精选歌单列表组件-->
     <hot-song-list></hot-song-list>
   </div>
 </template>
@@ -27,10 +30,9 @@ export default {
   components: {
     swipe,
     circleMenu,
-   hotSongList,
+    hotSongList
   }
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

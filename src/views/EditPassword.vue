@@ -5,54 +5,52 @@
 */
 <template>
   <div class="edit-password">
-    <base-nav :title="loginTitle"></base-nav>
+    <base-nav></base-nav>
+    <!--表单标题-->
     <div class="edit-password__title">{{ title }}</div>
     <form class="edit-password__form">
+      <!--旧密码输入框-->
       <p class="form">
         <input
           class="edit-password__form__old-password"
           type="password"
-          id="old-password"
           placeholder="Old Password"
-          name="userpwd"
           v-model="oldPassword"
           @blur="checkOldPassword"
         />
       </p>
+      <!--新密码输入框-->
       <p class="form">
         <input
           class="edit-password__form__new-password"
           type="password"
-          id="new-password"
           placeholder="New Password"
           v-model="newPassword"
         />
       </p>
+      <!--新密码确认输入框-->
       <p class="form">
         <input
           class="edit-password__form__confirm-userpwd"
           type="password"
-          id="passwd-confirm"
           placeholder="Confirm password"
           v-model="userpwdConfirm"
           @blur="checkPasspwdConfirm"
         />
       </p>
     </form>
+    <!--修改密码按钮-->
     <input
       type="submit"
       value="Submit"
       class="edit-password__form__edit"
-      style="margin-right: 10px;"
       @click="submit"
     />
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
 var isOldpwdCorrect = false;
-// eslint-disable-next-line no-unused-vars
 var isPwdCorrect = false;
 import BaseNav from "../components/BaseNav";
 import axios from "axios";
@@ -61,7 +59,6 @@ export default {
   data() {
     return {
       title: "Edit Password",
-      loginTitle: "",
       oldPassword: "",
       newPassword: "",
       userpwdConfirm: ""
@@ -71,8 +68,9 @@ export default {
     BaseNav
   },
   methods: {
+    /*验证两次输入的密码是否一致*/
     checkPasspwdConfirm() {
-      if (this.newPassword != this.userpwdConfirm) {
+      if (this.newPassword !== this.userpwdConfirm) {
         this.$notify({
           message: "密码不一致",
           type: "danger",
@@ -83,6 +81,7 @@ export default {
         isPwdCorrect = true;
       }
     },
+    /*验证旧密码是否正确*/
     checkOldPassword() {
       var username = this.$store.state.currentUserName;
       var oldpwd = this.oldPassword;
@@ -112,6 +111,7 @@ export default {
         }
       });
     },
+    /*修改密码函数*/
     submit() {
       if (isOldpwdCorrect && isPwdCorrect) {
         axios
@@ -123,7 +123,7 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-undef
             app.message = response.data.message;
-            if (response.data.message == "修改密码成功") {
+            if (response.data.message === "修改密码成功") {
               this.$dialog.alert({
                 message: "修改密码成功，跳转到首页"
               });
@@ -141,12 +141,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@mixin field($width, $font-size) {
+  height: 1.2rem;
+  width: $width;
+  border-radius: 1rem;
+  border: none;
+  font-size: $font-size;
+}
 .edit-password {
   height: 100%;
   background-color: #c62f2f;
   color: white;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
+  padding: 0 0.8rem 0;
   &__title {
     color: white;
     font-size: 1rem;
@@ -156,23 +162,14 @@ export default {
     &__old-password,
     &__new-password,
     &__confirm-userpwd {
-      border-radius: 1rem;
-      border: none;
-      height: 1.3rem;
-      width: 80%;
+      @include field(80%, 0.4rem);
       padding-left: 0.5rem;
-      font-size: 0.4rem;
       color: #333333;
     }
     &__edit {
-      background-color: white;
+      @include field(85%, 0.5rem);
       background-color: #42b983;
       color: white;
-      width: 80%;
-      height: 1.2rem;
-      border: none;
-      border-radius: 1rem;
-      font-size: 0.5rem;
     }
   }
 }

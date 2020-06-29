@@ -1,3 +1,8 @@
+/**
+ * @Author:Wang Jun
+ * @Date:2020/6/29/029 15:04
+ * @Description:vuex状态管理文件
+ */
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -5,13 +10,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentSongId: "",
-    startLoad: "true",
-    currentSongData: [],
-    playState: "playing",
-    currentUserName: "",
-    currentMusicTime:'',
-    currentTrackIds:[]
+    currentSongId: "", //当前歌曲Id
+    startLoad: "true", //载入动画显示
+    currentSongData: [], //当前歌曲信息
+    playState: "playing", //音乐播放状态
+    currentUserName: "", //当前用户名
+    currentMusicTime: "", //当前音乐播放时间
+    currentTrackIds: [] //当前音乐播放列表id
   },
   mutations: {
     changeCurrentSongId(state, currentSongId) {
