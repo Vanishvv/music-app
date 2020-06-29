@@ -3,7 +3,7 @@ vue-cli4.x+vant+vuex+vue-router+mongoDB+express仿网易云音乐的移动应用
 
 ### More Deatials in Blog
 ```
-//未添加
+https://blog.csdn.net/qq_33763827/article/details/107027212
 ```
 
 ## Project setup
