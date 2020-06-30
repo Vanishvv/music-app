@@ -1,4 +1,10 @@
 # music-app
+vue-cli4.x+vant+vuex+vue-router+mongoDB+express仿网易云音乐的移动应用前端工程
+
+### More Deatials in Blog
+```
+https://blog.csdn.net/qq_33763827/article/details/107027212
+```
 
 ## Project setup
 ```
@@ -15,15 +21,10 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
+### Compiles and minifies for production
 ```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
+npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
