@@ -95,7 +95,8 @@ export default {
       );
       if (res.status === 200 && res) {
         var tmp = res.data.result.songs;
-        for (let i = 0; i < tmp.length; i++) {
+        let len = tmp.length;
+        for (let i = 0; i < len; i++) {
           for (let j = 0; j < tmp[i].artists.length; j++) {
             var author = [];
             var obj1 = {
@@ -117,7 +118,8 @@ export default {
       let res = await axios.get("http://localhost:3000/search/hot/detail");
       if (res.status === 200 && res) {
         var tmp = res.data.data;
-        for (let i = 0; i < tmp.length; i++) {
+        let len = tmp.length;
+        for (let i = 0; i < len; i++) {
           var obj = {
             name: tmp[i].searchWord,
             description: tmp[i].content

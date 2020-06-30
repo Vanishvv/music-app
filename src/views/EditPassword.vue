@@ -86,14 +86,11 @@ export default {
       var username = this.$store.state.currentUserName;
       var oldpwd = this.oldPassword;
       axios.get("http://localhost:3001/api/login").then(response => {
-        // eslint-disable-next-line no-undef
-        app.arr = response.data.data;
-        // eslint-disable-next-line no-undef
-        for (var i = 0; i < app.arr.length; i++) {
-          // eslint-disable-next-line no-undef
-          if (app.arr[i].username.trim() === username.trim()) {
-            // eslint-disable-next-line no-undef
-            if (app.arr[i].userpwd.trim() === oldpwd.trim()) {
+        let res = response.data.data;
+        let len = res.length;
+        for (var i = 0; i < len.length; i++) {
+          if (res[i].username.trim() === username.trim()) {
+            if (res[i].userpwd.trim() === oldpwd.trim()) {
               isOldpwdCorrect = true;
               this.$notify({
                 message: "旧密码正确",
@@ -122,8 +119,8 @@ export default {
           })
           .then(response => {
             // eslint-disable-next-line no-undef
-            app.message = response.data.message;
-            if (response.data.message === "修改密码成功") {
+            let msg = response.data.message;
+            if (msg === "修改密码成功") {
               this.$dialog.alert({
                 message: "修改密码成功，跳转到首页"
               });

@@ -89,7 +89,8 @@ export default {
     /*点击切换歌曲的函数*/
     async changeSong(num) {
       let tracksIds = this.$store.state.currentTrackIds;
-      for (let i = 0; i < tracksIds.length; i++) {
+      let len=tracksIds.length;
+      for (let i = 0; i < len; i++) {
         if (
           tracksIds[i].id === this.$store.state.currentSongId &&
           i !== 0 &&
@@ -144,15 +145,12 @@ export default {
       axios
         .get("http://localhost:3001/api/getSongCollection")
         .then(response => {
-          // eslint-disable-next-line no-undef
-          app.arr = response.data.data;
-          // eslint-disable-next-line no-undef
-          for (let i = 0; i < app.arr.length; i++) {
+          let res = response.data.data;
+          let len=res.length;
+          for (let i = 0; i < len; i++) {
             if (
-              // eslint-disable-next-line no-undef
-              app.arr[i].songid === this.$store.state.currentSongId &&
-              // eslint-disable-next-line no-undef
-              app.arr[i].username === this.$store.state.currentUserName
+              res[i].songid === this.$store.state.currentSongId &&
+              res[i].username === this.$store.state.currentUserName
             ) {
               this.likeColor = "red";
               break;
@@ -170,9 +168,8 @@ export default {
               songid: this.$store.state.currentSongId
             })
             .then(response => {
-              // eslint-disable-next-line no-undef
-              app.message = response.data.message;
-              if (response.data.message === "收藏歌曲成功") {
+              let msg = response.data.message;
+              if (msg === "收藏歌曲成功") {
                 this.likeColor = "red";
                 this.$notify({
                   message: "收藏歌曲成功",
@@ -194,9 +191,8 @@ export default {
               songid: this.$store.state.currentSongId
             })
             .then(response => {
-              // eslint-disable-next-line no-undef
-              console.log(response.data.message);
-              if (response.data.message === "取消收藏成功") {
+              let msg=response.data.message;
+              if (msg === "取消收藏成功") {
                 this.likeColor = "white";
                 this.$notify({
                   message: "取消收藏成功",

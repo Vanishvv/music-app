@@ -103,18 +103,13 @@ export default {
       await axios
         .get("http://localhost:3001/api/getListCollection")
         .then(response => {
-          // eslint-disable-next-line no-undef
-          app.arr = response.data.data;
+          let res = response.data.data;
           listIdData.length = 0;
           var j = 0;
-          // eslint-disable-next-line no-undef
-          for (let i = 0; i < app.arr.length; i++) {
-            if (
-              // eslint-disable-next-line no-undef
-              app.arr[i].username === this.$store.state.currentUserName
-            ) {
-              // eslint-disable-next-line no-undef
-              listIdData[j] = app.arr[i].listid;
+          let len = res.length;
+          for (let i = 0; i < len; i++) {
+            if (res[i].username === this.$store.state.currentUserName) {
+              listIdData[j] = res[i].listid;
               j++;
             }
           }
@@ -123,7 +118,7 @@ export default {
         let res = await axios.get(
           "http://localhost:3000/playlist/detail?id=" + listIdData[i]
         );
-        if (res.status == 200 && res) {
+        if (res.status === 200 && res) {
           var obj = {
             picUrl: res.data.playlist.coverImgUrl,
             playCount: res.data.playlist.playCount,
@@ -139,23 +134,21 @@ export default {
       await axios
         .get("http://localhost:3001/api/getSongCollection")
         .then(response => {
-          // eslint-disable-next-line no-undef
-          app.arr = response.data.data;
+          let res = response.data.data;
           songIdData.length = 0;
           var j = 0;
-          // eslint-disable-next-line no-undef
-          for (let i = 0; i < app.arr.length; i++) {
+          let len=res.length;;
+          for (let i = 0; i < len; i++) {
             if (
-              // eslint-disable-next-line no-undef
-              app.arr[i].username === this.$store.state.currentUserName
+              res[i].username === this.$store.state.currentUserName
             ) {
-              // eslint-disable-next-line no-undef
-              songIdData[j] = app.arr[i].songid;
+              songIdData[j] = res[i].songid;
               j++;
             }
           }
         });
-      for (let i = 0; i < songIdData.length; i++) {
+      let l=songIdData.length;
+      for (let i = 0; i < l; i++) {
         var obj1 = {
           id: songIdData[i]
         };

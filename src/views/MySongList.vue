@@ -35,23 +35,19 @@ export default {
       await axios
         .get("http://localhost:3001/api/getSongCollection")
         .then(response => {
-          // eslint-disable-next-line no-undef
-          app.arr = response.data.data;
+          let res = response.data.data;
           songIdData.length = 0;
-          var j = 0;
-          // eslint-disable-next-line no-undef
-          for (let i = 0; i < app.arr.length; i++) {
-            if (
-              // eslint-disable-next-line no-undef
-              app.arr[i].username === this.$store.state.currentUserName
-            ) {
-              // eslint-disable-next-line no-undef
-              songIdData[j] = app.arr[i].songid;
+          let j = 0;
+          let len = res.length;
+          for (let i = 0; i < len; i++) {
+            if (res[i].username === this.$store.state.currentUserName) {
+              songIdData[j] = res[i].songid;
               j++;
             }
           }
         });
-      for (let i = 0; i < songIdData.length; i++) {
+      let l = songIdData.length;
+      for (let i = 0; i < l; i++) {
         let res = await axios.get(
           "http://localhost:3000/song/detail?ids=" + songIdData[i]
         );
@@ -64,7 +60,7 @@ export default {
           this.myMusic.push(obj);
         }
       }
-      for (let i = 0; i < songIdData.length; i++) {
+      for (let i = 0; i < l; i++) {
         var obj1 = {
           id: songIdData[i]
         };

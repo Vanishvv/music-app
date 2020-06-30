@@ -97,15 +97,12 @@ export default {
       axios
         .get("http://localhost:3001/api/getListCollection")
         .then(response => {
-          // eslint-disable-next-line no-undef
-          app.arr = response.data.data;
-          // eslint-disable-next-line no-undef
-          for (let i = 0; i < app.arr.length; i++) {
+          let res = response.data.data;
+          let len=res.length;
+          for (let i = 0; i < len; i++) {
             if (
-              // eslint-disable-next-line no-undef
-              app.arr[i].listid === this.$route.query.id &&
-              // eslint-disable-next-line no-undef
-              app.arr[i].username === this.$store.state.currentUserName
+              res[i].listid === this.$route.query.id &&
+              res[i].username === this.$store.state.currentUserName
             ) {
               this.add = "取消收藏";
               break;
@@ -123,9 +120,8 @@ export default {
               listid: this.$route.query.id
             })
             .then(response => {
-              // eslint-disable-next-line no-undef
-              app.message = response.data.message;
-              if (response.data.message === "收藏歌单成功") {
+              let msg = response.data.message;
+              if (msg === "收藏歌单成功") {
                 this.add = "取消收藏";
                 this.$notify({
                   message: "收藏歌单成功",
@@ -147,9 +143,8 @@ export default {
               listid: this.$route.query.id
             })
             .then(response => {
-              // eslint-disable-next-line no-undef
-              console.log(response.data.message);
-              if (response.data.message === "取消收藏成功") {
+              let msg = response.data.message;
+              if (msg === "取消收藏成功") {
                 this.add = "收藏歌单";
                 this.$notify({
                   message: "取消收藏成功",

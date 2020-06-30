@@ -98,12 +98,10 @@ export default {
     /*验证用户名是否已存在*/
     checkName() {
       axios.get("http://localhost:3001/api/login").then(response => {
-        // eslint-disable-next-line no-undef
-        app.arr = response.data.data;
-        // eslint-disable-next-line no-undef
-        for (let i = 0; i < app.arr.length; i++) {
-          // eslint-disable-next-line no-undef
-          if (app.arr[i].username.trim() === this.username.trim()) {
+        let res = response.data.data;
+        let len = res.length;
+        for (let i = 0; i < len; i++) {
+          if (res[i].username.trim() === this.username.trim()) {
             this.$notify({
               message: "用户名已存在",
               type: "danger",
@@ -127,9 +125,8 @@ export default {
             userpwdConfirm: this.userpwdConfirm
           })
           .then(response => {
-            // eslint-disable-next-line no-undef
-            app.message = response.data.message;
-            if (response.data.message === "注册成功") {
+            let msg = response.data.message;
+            if (msg === "注册成功") {
               this.$dialog.alert({
                 message: "注册成功，跳转到首页"
               });

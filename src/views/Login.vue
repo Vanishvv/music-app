@@ -72,15 +72,12 @@ export default {
       var userpwd = this.userpwd;
       var flag = false;
       axios.get("http://localhost:3001/api/login").then(response => {
-        // eslint-disable-next-line no-undef
-        app.arr = response.data.data;
-        // eslint-disable-next-line no-undef
-        for (var i = 0; i < app.arr.length; i++) {
-          // eslint-disable-next-line no-undef
-          if (app.arr[i].username.trim() === username.trim()) {
+        let res = response.data.data;
+        let len=res.length;
+        for (var i = 0; i < len; i++) {
+          if (res[i].username.trim() === username.trim()) {
             flag = true;
-            // eslint-disable-next-line no-undef
-            if (app.arr[i].userpwd.trim() === userpwd.trim()) {
+            if (res[i].userpwd.trim() === userpwd.trim()) {
               this.$dialog.alert({
                 message: "登录成功，跳转到首页"
               });
@@ -94,7 +91,9 @@ export default {
           }
         }
         if (flag === false) {
-          console.log("用户名不存在");
+          this.$dialog.alert({
+            message: "用户名不存在"
+          });
         }
       });
     }

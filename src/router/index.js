@@ -5,23 +5,25 @@
  */
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Index from "../views/Index";
-import CloudVillage from "../views/unmadePages/CloudVillage";
-import FindPage from "../views/FindPage";
-import PersonalPage from "../views/PersonalPage";
-import Video from "../views/unmadePages/Video";
-import SongList from "../views/SongList";
-import LeaderBoard from "../views/LeaderBoard";
-import DailyList from "../views/unmadePages/DailyList";
-import DJ from "../views/unmadePages/DJ";
-import Search from "../views/Search";
-import SongListDetail from "../views/SongListDetail";
-import MusicPlayer from "../views/MusicPlayer";
-import Login from "../views/Login";
-import Register from "../views/Register";
-import Settings from "../views/Settings";
-import EditPassword from "../views/EditPassword";
-import MySongList from "../views/MySongList";
+const Index = resolve => require(["../views/Index"], resolve);
+const CloudVillage = resolve =>
+  require(["../views/unmadePages/CloudVillage"], resolve);
+const FindPage = resolve => require(["../views/FindPage"], resolve);
+const PersonalPage = resolve => require(["../views/PersonalPage"], resolve);
+const Video = resolve => require(["../views/unmadePages/Video"], resolve);
+const SongList = resolve => require(["../views/SongList"], resolve);
+const LeaderBoard = resolve => require(["../views/LeaderBoard"], resolve);
+const DailyList = resolve =>
+  require(["../views/unmadePages/DailyList"], resolve);
+const DJ = resolve => require(["../views/unmadePages/DJ"], resolve);
+const Search = resolve => require(["../views/Search"], resolve);
+const SongListDetail = resolve => require(["../views/SongListDetail"], resolve);
+const MusicPlayer = resolve => require(["../views/MusicPlayer"], resolve);
+const Login = resolve => require(["../views/Login"], resolve);
+const Register = resolve => require(["../views/Register"], resolve);
+const Settings = resolve => require(["../views/Settings"], resolve);
+const EditPassword = resolve => require(["../views/EditPassword"], resolve);
+const MySongList = resolve => require(["../views/MySongList"], resolve);
 
 Vue.use(VueRouter);
 

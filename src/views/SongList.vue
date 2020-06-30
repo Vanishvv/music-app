@@ -91,13 +91,15 @@ export default {
   methods: {
     /*异步获取歌单广场数据并赋值*/
     async getList() {
-      for (let i = 0; i < this.listData.length; i++) {
+      let len=this.listData.length;
+      for (let i = 0; i < len; i++) {
         let res = await axios.get(
           "http://localhost:3000/top/playlist?cat=" + this.listData[i].name
         );
         if (res.status === 200 && res) {
           var list = res.data.playlists;
-          for (let j = 0; j < list.length; j++) {
+          let l=list.length;
+          for (let j = 0; j < l; j++) {
             var datas = {
               picUrl: list[j].coverImgUrl,
               playCount: list[j].playCount,
