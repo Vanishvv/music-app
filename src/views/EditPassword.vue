@@ -88,7 +88,7 @@ export default {
       axios.get("http://localhost:3001/api/login").then(response => {
         let res = response.data.data;
         let len = res.length;
-        for (var i = 0; i < len.length; i++) {
+        for (var i = 0; i < len; i++) {
           if (res[i].username.trim() === username.trim()) {
             if (res[i].userpwd.trim() === oldpwd.trim()) {
               isOldpwdCorrect = true;

@@ -89,12 +89,12 @@ export default {
     /*点击切换歌曲的函数*/
     async changeSong(num) {
       let tracksIds = this.$store.state.currentTrackIds;
-      let len=tracksIds.length;
+      let len = tracksIds.length;
       for (let i = 0; i < len; i++) {
         if (
-          tracksIds[i].id === this.$store.state.currentSongId &&
-          i !== 0 &&
-          i !== tracksIds.length - 1
+          tracksIds[i].id == this.$store.state.currentSongId &&
+          i != 0 &&
+          i != tracksIds.length - 1
         ) {
           if (num === 1) {
             this.$store.commit("changeCurrentSongId", tracksIds[i - 1].id);
