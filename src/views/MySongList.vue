@@ -40,7 +40,7 @@ export default {
           let j = 0;
           let len = res.length;
           for (let i = 0; i < len; i++) {
-            if (res[i].username === this.$store.state.currentUserName) {
+            if (res[i].username === localStorage.getItem("currentUserName")) {
               songIdData[j] = res[i].songid;
               j++;
             }

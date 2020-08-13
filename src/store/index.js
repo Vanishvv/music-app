@@ -14,7 +14,7 @@ export default new Vuex.Store({
     startLoad: "true", //载入动画显示
     currentSongData: [], //当前歌曲信息
     playState: "playing", //音乐播放状态
-    currentUserName: "", //当前用户名
+    // currentUserName: "", //当前用户名
     currentMusicTime: "", //当前音乐播放时间
     currentTrackIds: [] //当前音乐播放列表id
   },
@@ -31,9 +31,9 @@ export default new Vuex.Store({
     changePlayState(state, playState) {
       state.playState = playState;
     },
-    changeCurrentUserName(state, currentUserName) {
-      state.currentUserName = currentUserName;
-    },
+    // changeCurrentUserName(state, currentUserName) {
+    //   state.currentUserName = currentUserName;
+    // },
     changeCurrentMusicTime(state, currentMusicTime) {
       state.currentMusicTime = currentMusicTime;
     },
@@ -54,9 +54,9 @@ export default new Vuex.Store({
     getterPlayState(state) {
       return state.playState;
     },
-    getterCurrentUserName(state) {
-      return state.currentUserName;
-    },
+    // getterCurrentUserName(state) {
+    //   return state.currentUserName;
+    // },
     getterCurrentMusicTime(state) {
       return state.currentMusicTime;
     },
@@ -77,9 +77,9 @@ export default new Vuex.Store({
     getPlayState({ commit }, data) {
       commit("changePlayState", data);
     },
-    getCurrentUserName({ commit }, data) {
-      commit("changeCurrentUserName", data);
-    },
+    // getCurrentUserName({ commit }, data) {
+    //   commit("changeCurrentUserName", data);
+    // },
     getCurrentMusicTime({ commit }, data) {
       commit("changeCurrentMusicTime", data);
     },

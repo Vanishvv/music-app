@@ -150,7 +150,7 @@ export default {
           for (let i = 0; i < len; i++) {
             if (
               res[i].songid === this.$store.state.currentSongId &&
-              res[i].username === this.$store.state.currentUserName
+              res[i].username === localStorage.getItem("currentUserName")
             ) {
               this.likeColor = "red";
               break;
@@ -164,7 +164,7 @@ export default {
         if (this.likeColor === "white") {
           axios
             .post("http://localhost:3001/api/addSongCollection", {
-              username: this.$store.state.currentUserName,
+              username: localStorage.getItem("currentUserName"),
               songid: this.$store.state.currentSongId
             })
             .then(response => {
@@ -187,7 +187,7 @@ export default {
         } else if (this.likeColor === "red") {
           axios
             .post("http://localhost:3001/api/deleteSongCollection", {
-              username: this.$store.state.currentUserName,
+              username: localStorage.getItem("currentUserName"),
               songid: this.$store.state.currentSongId
             })
             .then(response => {

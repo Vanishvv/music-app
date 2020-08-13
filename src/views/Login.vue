@@ -81,7 +81,7 @@ export default {
               this.$dialog.alert({
                 message: "登录成功，跳转到首页"
               });
-              this.$store.commit("changeCurrentUserName", this.username);
+              localStorage.setItem("currentUserName",this.username);
               this.$router.push("/");
             } else {
               this.$dialog.alert({

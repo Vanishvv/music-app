@@ -68,7 +68,7 @@ export default {
   name: "",
   data() {
     return {
-      userName: this.$store.state.currentUserName, //当前用户名
+      userName: localStorage.getItem("currentUserName"), //当前用户名
       sidePopupInfo: sidePopupData.data //侧边栏数据
     };
   },

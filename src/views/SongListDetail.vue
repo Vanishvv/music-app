@@ -116,7 +116,7 @@ export default {
         if (this.add === "收藏歌单") {
           axios
             .post("http://localhost:3001/api/addListCollection", {
-              username: this.$store.state.currentUserName,
+              username: localStorage.getItem("currentUserName"),
               listid: this.$route.query.id
             })
             .then(response => {
@@ -139,7 +139,7 @@ export default {
         } else if (this.add === "取消收藏") {
           axios
             .post("http://localhost:3001/api/deleteListCollection", {
-              username: this.$store.state.currentUserName,
+              username: localStorage.getItem("currentUserName"),
               listid: this.$route.query.id
             })
             .then(response => {

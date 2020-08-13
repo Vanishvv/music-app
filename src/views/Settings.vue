@@ -69,7 +69,7 @@ export default {
   methods: {
     /*进入修改密码页面*/
     edit() {
-      if (this.$store.state.currentUserName !== "") {
+      if (localStorage.getItem("currentUserName") !== "") {
         this.$router.push("/editPassword");
       } else {
         this.$dialog.alert({
@@ -79,7 +79,7 @@ export default {
     },
     /*退出登陆页面*/
     quit() {
-      this.$store.commit("changeCurrentUserName", "");
+      localStorage.setItem("currentUserName","")
       this.$dialog.alert({
         message: "退出账号成功"
       });

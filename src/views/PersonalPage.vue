@@ -28,7 +28,6 @@
       <strong>{{ listTitle }}</strong>
       <div
         class="personal-page__content__list-colletcion"
-        v-if="this.$store.state.currentUserName"
       >
         <!--歌单展示卡片-->
         <img-card
@@ -60,7 +59,7 @@ export default {
   name: "",
   data() {
     return {
-      username: this.$store.state.currentUserName,
+      username: localStorage.getItem("currentUserName"),
       myMusicTitle: "我喜欢的音乐",
       listTitle: "我收藏的歌单",
       buttonContent: "查看更多",
@@ -81,7 +80,7 @@ export default {
   methods: {
     /*跳转到我喜欢的音乐页面*/
     goToDetail() {
-      if (this.$store.state.currentUserName !== "") {
+      if (localStorage.getItem("currentUserName") !== "") {
         this.$router.push("/mySongList");
       } else {
         this.$dialog.alert({
@@ -108,7 +107,7 @@ export default {
           var j = 0;
           let len = res.length;
           for (let i = 0; i < len; i++) {
-            if (res[i].username === this.$store.state.currentUserName) {
+            if (res[i].username === localStorage.getItem("currentUserName")) {
               listIdData[j] = res[i].listid;
               j++;
             }
@@ -140,7 +139,7 @@ export default {
           let len=res.length;;
           for (let i = 0; i < len; i++) {
             if (
-              res[i].username === this.$store.state.currentUserName
+              res[i].username === localStorage.getItem("currentUserName")
             ) {
               songIdData[j] = res[i].songid;
               j++;

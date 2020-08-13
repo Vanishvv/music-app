@@ -139,6 +139,9 @@ export default {
       font-size: 0.32rem;
       text-align: left;
       overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
 }

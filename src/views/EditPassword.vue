@@ -83,7 +83,7 @@ export default {
     },
     /*验证旧密码是否正确*/
     checkOldPassword() {
-      var username = this.$store.state.currentUserName;
+      var username = localStorage.getItem("currentUserName");
       var oldpwd = this.oldPassword;
       axios.get("http://localhost:3001/api/login").then(response => {
         let res = response.data.data;
@@ -113,7 +113,7 @@ export default {
       if (isOldpwdCorrect && isPwdCorrect) {
         axios
           .post("http://localhost:3001/api/edit", {
-            username: this.$store.state.currentUserName,
+            username: localStorage.getItem("currentUserName"),
             newpwd: this.newPassword,
             userpwdConfirm: this.userpwdConfirm
           })

@@ -72,7 +72,6 @@ export default {
   },
   mounted() {
     /*初始化音乐播放器*/
-    console.log(this.$store.state.currentMusicTime);
     if (this.$store.state.playState === "playing") {
       this.iconChange = "iconfont icon-play-list";
     } else {
